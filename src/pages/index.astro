@@ -1,0 +1,738 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <!-- HERO SECTION (Pure Black Canvas, white text, bold compressed typography) -->
+  <section id="home" class="min-h-[80vh] md:min-h-screen bg-canvas text-white relative overflow-hidden flex flex-col justify-start pt-10 md:pt-20 pb-20 border-b border-hairline">
+    
+    <!-- Left side rotated indicator -->
+    <div class="absolute left-6 bottom-16 hidden lg:flex items-center gap-3 origin-left -rotate-90 translate-y-12">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue animate-ping"></span>
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue absolute"></span>
+      <span class="font-mono text-xs tracking-widest text-ink-muted uppercase">01. Start</span>
+      <span class="w-12 h-px bg-hairline"></span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <!-- Main Intro Copy -->
+      <div class="lg:col-span-8 flex flex-col justify-center">
+        <p class="font-mono text-[13px] tracking-wider uppercase text-accent-blue mb-6 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent-blue"></span> Parampreet Singh &mdash; Portfolio
+        </p>
+        
+        <!-- Large Heading with inline-graphic svg capsules and aggressive letter-spacing (-4.25px / -5.5px) -->
+        <h1 class="text-4xl md:text-7xl lg:text-[85px] font-medium tracking-[-0.05em] leading-[0.95] text-white mb-8 font-display font-feature-display">
+          Parampreet 
+          <!-- Inline Graphic 1 (Circuit board pattern) -->
+          <span class="inline-flex items-center align-middle mx-1 md:mx-2 px-3 py-1 bg-surface-1 rounded-[20px] border border-hairline h-[38px] md:h-[58px] lg:h-[68px] w-[70px] md:w-[110px] lg:w-[130px] overflow-hidden select-none">
+            <svg class="w-full h-full text-accent-blue opacity-85" viewBox="0 0 100 40" fill="none" stroke="currentColor">
+              <path d="M10 20h20l10-10h20l10 10h20" stroke-width="1.5" stroke-dasharray="2 2" />
+              <circle cx="10" cy="20" r="3" fill="currentColor" />
+              <circle cx="90" cy="20" r="3" fill="currentColor" />
+              <circle cx="40" cy="10" r="2" fill="currentColor" />
+              <circle cx="60" cy="10" r="2" fill="currentColor" />
+            </svg>
+          </span>
+          Singh
+          <br />
+          <span class="text-ink-muted">Building the Future of Web Apps.</span>
+        </h1>
+
+        <p class="text-base md:text-lg text-ink-muted max-w-xl leading-relaxed mb-10 font-sans font-light tracking-[-0.15px]">
+          I'm a Computer Science student who crafts robust full-stack platforms, configures scalable cloud systems on AWS, and designs clean automations.
+        </p>
+
+        <!-- CTA Buttons (Framer pill designs) -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <a 
+            href="#projects" 
+            class="px-[20px] py-[12px] rounded-[100px] bg-white text-black font-sans text-[14px] font-medium tracking-[-0.14px] leading-none hover:bg-slate-200 transition-colors text-center flex items-center justify-center gap-2 group"
+          >
+            View Projects 
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+          <a 
+            href="/resume.pdf" 
+            download="Parampreet_Singh_Resume.pdf"
+            class="px-[20px] py-[12px] rounded-[100px] bg-surface-1 hover:bg-surface-2 border border-hairline text-white font-sans text-[14px] font-medium tracking-[-0.14px] leading-none transition-colors text-center flex items-center justify-center gap-2"
+          >
+            Download Resume
+          </a>
+        </div>
+      </div>
+      
+      <!-- Right Side Minimal Stats (Swiss Layout) -->
+      <div class="lg:col-span-4 grid grid-cols-2 gap-4 lg:pl-8 mt-8 lg:mt-0 font-mono border-t lg:border-t-0 lg:border-l border-hairline pt-8 lg:pt-0 lg:h-80 flex flex-col justify-center">
+        <div class="border-b border-hairline pb-4">
+          <span class="text-xs text-ink-muted block uppercase mb-1">Focus</span>
+          <span class="text-sm font-bold text-white block">Full Stack DevOps</span>
+        </div>
+        <div class="border-b border-hairline pb-4">
+          <span class="text-xs text-ink-muted block uppercase mb-1">AWS Status</span>
+          <span class="text-sm font-bold text-white block">Practitioner (In Prep)</span>
+        </div>
+        <div class="border-b border-hairline pb-4">
+          <span class="text-xs text-ink-muted block uppercase mb-1">Education</span>
+          <span class="text-sm font-bold text-white block">B.Tech CSE (2027)</span>
+        </div>
+        <div class="border-b border-hairline pb-4">
+          <span class="text-xs text-ink-muted block uppercase mb-1">Automation</span>
+          <span class="text-sm font-bold text-white block">n8n / Bash / CI-CD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT ME SECTION (Pure Black Canvas, Asymmetric poster rhythm) -->
+  <section id="about" class="min-h-screen bg-canvas text-white relative overflow-hidden flex flex-col justify-center py-32 border-b border-hairline">
+    
+    <!-- Left side rotated indicator -->
+    <div class="absolute left-6 bottom-16 hidden lg:flex items-center gap-3 origin-left -rotate-90 translate-y-12">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue"></span>
+      <span class="font-mono text-xs tracking-widest text-ink-muted uppercase">02. Profile</span>
+      <span class="w-12 h-px bg-hairline"></span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Section Header -->
+      <div class="lg:col-span-5 lg:sticky lg:top-28">
+        <span class="font-mono text-xs text-accent-blue uppercase tracking-widest block mb-4">/profile-history</span>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-[-0.05em] leading-[1.00] text-white mb-8 font-display">
+          Passionate about <br />
+          <span class="text-ink-muted">clean code</span> & automated architecture.
+        </h2>
+        <div class="space-y-6 text-ink-muted text-[15px] leading-[1.30] tracking-[-0.15px] font-light">
+          <p>
+            I am a Computer Science student at <strong class="text-white font-medium">Chitkara University</strong>, driven by a deep curiosity about how systems run under the hood. My coding path started with Java and evolved into constructing complex full-stack web applications.
+          </p>
+          <p>
+            Currently, I'm deep diving into <strong class="text-white font-medium">Cloud & DevOps</strong>. I build high-availability node environments, containerize services using Docker, and automate complex pipelines using tools like n8n and Bash scripting.
+          </p>
+          <p>
+            When I'm not writing code, I'm optimizing local dev environments, researching deployment scripts, or coordinating team projects.
+          </p>
+        </div>
+      </div>
+
+      <!-- Asymmetric showcase cards grid containing Framer's signature gradient cards (Image 4 style) -->
+      <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6 lg:pl-6">
+        
+        <!-- Highlight Card 1: Vibrant Gradient Atmosphere Showcase Card (Violet) -->
+        <div class="p-8 rounded-[30px] gradient-violet-bg border border-hairline flex flex-col justify-between h-80 text-white relative overflow-hidden shadow-lg md:col-span-2">
+          <div>
+            <span class="font-mono text-xs text-white/70 block mb-2">01 / STACK</span>
+            <h3 class="text-[32px] font-medium tracking-[-1.0px] leading-[1.13] text-white font-display mb-3">
+              Full Stack Engineering
+            </h3>
+            <p class="text-white/80 text-[14px] leading-[1.30] tracking-[-0.14px] font-light">
+              Designing responsive React frontends, robust Node/Express/Spring Boot API backends, and configuring relational/document-store persistent databases (PostgreSQL, MongoDB, MySQL).
+            </p>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-white/90">
+            <span>React &bull; Next.js &bull; Node &bull; Spring Boot</span>
+          </div>
+        </div>
+
+        <!-- Highlight Card 2: Vibrant Gradient Atmosphere Showcase Card (Orange) -->
+        <div class="p-8 rounded-[30px] gradient-orange-bg border border-hairline flex flex-col justify-between h-80 text-white relative overflow-hidden shadow-lg">
+          <div>
+            <span class="font-mono text-xs text-white/70 block mb-2">02 / OPS</span>
+            <h3 class="text-[32px] font-medium tracking-[-1.0px] leading-[1.13] text-white font-display mb-3">
+              Cloud & DevOps
+            </h3>
+            <p class="text-white/80 text-[14px] leading-[1.30] tracking-[-0.14px] font-light">
+              Configuring AWS virtual instances, containerizing backend modules in Docker, setting up pipelines, and building visual workflows with n8n.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-white/90">
+            <span>AWS &bull; Docker &bull; n8n &bull; Linux</span>
+          </div>
+        </div>
+
+        <!-- Highlight Card 3: Vibrant Gradient Atmosphere Showcase Card (Magenta) -->
+        <div class="p-8 rounded-[30px] gradient-magenta-bg border border-hairline flex flex-col justify-between h-80 text-white relative overflow-hidden shadow-lg">
+          <div>
+            <span class="font-mono text-xs text-white/70 block mb-2">03 / DSA</span>
+            <h3 class="text-[32px] font-medium tracking-[-1.0px] leading-[1.13] text-white font-display mb-3">
+              Problem Solving
+            </h3>
+            <p class="text-white/80 text-[14px] leading-[1.30] tracking-[-0.14px] font-light">
+              Optimizing algorithms in Core Java and C++, relational query structuring, data structure design, and memory profiling.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-white/90">
+            <span>Java &bull; C++ &bull; SQL &bull; Structures</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION (Pure Black Canvas, Interactive dark Venn diagram) -->
+  <section id="skills" class="min-h-screen bg-canvas text-white relative overflow-hidden flex flex-col justify-center py-32 border-b border-hairline">
+    
+    <!-- Left side rotated indicator -->
+    <div class="absolute left-6 bottom-16 hidden lg:flex items-center gap-3 origin-left -rotate-90 translate-y-12">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue"></span>
+      <span class="font-mono text-xs tracking-widest text-ink-muted uppercase">03. Matrix</span>
+      <span class="w-12 h-px bg-hairline"></span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <!-- Left Column: Venn Diagram (Swiss schematic on black background) -->
+      <div class="lg:col-span-6 flex justify-center relative py-8">
+        <div class="w-full max-w-[420px] aspect-square relative select-none">
+          <svg class="w-full h-full" viewBox="0 0 400 400" fill="none">
+            <!-- Glow at the center intersection -->
+            <circle cx="200" cy="210" r="40" fill="rgba(0, 153, 255, 0.25)" class="animate-pulse" />
+
+            <!-- Circle 1: Web Development (Top) -->
+            <g id="venn-web" class="cursor-pointer group/circle" data-category="web">
+              <circle cx="200" cy="150" r="100" class="fill-surface-1/40 stroke-hairline group-hover/circle:fill-surface-2 group-hover/circle:stroke-accent-blue transition-all duration-300" stroke-width="1.5" />
+              <text x="200" y="90" text-anchor="middle" class="font-mono text-xs font-bold fill-white group-hover/circle:fill-accent-blue transition-colors">WEB DEV</text>
+            </g>
+
+            <!-- Circle 2: Cloud & DevOps (Bottom Left) -->
+            <g id="venn-devops" class="cursor-pointer group/circle" data-category="devops">
+              <circle cx="140" cy="245" r="100" class="fill-surface-1/40 stroke-hairline group-hover/circle:fill-surface-2 group-hover/circle:stroke-accent-blue transition-all duration-300" stroke-width="1.5" />
+              <text x="90" y="295" text-anchor="middle" class="font-mono text-xs font-bold fill-white group-hover/circle:fill-accent-blue transition-colors">CLOUD & DEVOPS</text>
+            </g>
+
+            <!-- Circle 3: Programming & DB (Bottom Right) -->
+            <g id="venn-prog" class="cursor-pointer group/circle" data-category="programming">
+              <circle cx="260" cy="245" r="100" class="fill-surface-1/40 stroke-hairline group-hover/circle:fill-surface-2 group-hover/circle:stroke-accent-blue transition-all duration-300" stroke-width="1.5" />
+              <text x="310" y="295" text-anchor="middle" class="font-mono text-xs font-bold fill-white group-hover/circle:fill-accent-blue transition-colors">PROG & DB</text>
+            </g>
+
+            <!-- Central Overlap Region (Accent Blue overlapping path) -->
+            <path 
+              id="venn-intersection"
+              d="M 200,183 A 100,100 0 0,1 224,228 A 100,100 0 0,1 176,228 A 100,100 0 0,1 200,183 Z" 
+              class="fill-accent-blue stroke-accent-blue/80 cursor-pointer hover:scale-105 origin-center transition-all duration-300"
+              stroke-width="1"
+              data-category="intersection"
+            />
+            <text x="200" y="215" text-anchor="middle" class="font-mono text-[9px] font-extrabold fill-black pointer-events-none">DEV</text>
+            <text x="200" y="224" text-anchor="middle" class="font-mono text-[9px] font-extrabold fill-black pointer-events-none">OPS</text>
+          </svg>
+          
+          <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-center">
+            <span class="font-mono text-[10px] text-ink-muted block uppercase">← Hover circles to query skills →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Details Panel -->
+      <div class="lg:col-span-6 flex flex-col justify-center lg:pl-12">
+        <span class="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-4">/skills-matrix</span>
+        <h3 class="text-3xl md:text-4xl font-medium tracking-[-0.05em] leading-[1.00] text-white mb-6 font-display" id="skills-title">
+          My Tech Synthesis
+        </h3>
+        <p class="text-ink-muted text-[15px] leading-[1.30] tracking-[-0.15px] mb-8 font-light font-sans" id="skills-desc">
+          I build at the intersection of full-stack engineering, cloud architecture, and database performance. Hover over any circle in the diagram to inspect my specific skill domains.
+        </p>
+
+        <!-- Skill Pills Container -->
+        <div id="skills-container" class="flex flex-wrap gap-2 transition-all duration-300">
+          <!-- Default View: Shows All Skills -->
+          <!-- Web Dev -->
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">HTML/CSS</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">React.js</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Next.js (Learning)</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Node.js</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Express.js</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Spring Boot</span>
+          <!-- Cloud & DevOps -->
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">AWS (EC2, S3, RDS)</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Docker</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">CI/CD Pipelines</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">n8n Automation</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Linux / Bash</span>
+          <!-- Prog & DB -->
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Java</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Data Structures (DSA)</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">C++</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">SQL</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">MongoDB / MySQL</span>
+          <!-- Tools -->
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Git & GitHub</span>
+          <span class="px-3 py-1.5 rounded-[6px] bg-surface-1 text-white border border-hairline font-mono text-[13px] tracking-tight">Postman / APIs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION (Pure Black Canvas, Column-list layout) -->
+  <section id="projects" class="min-h-screen bg-canvas text-white relative overflow-hidden flex flex-col justify-center py-32 border-b border-hairline">
+    
+    <!-- Left side rotated indicator -->
+    <div class="absolute left-6 bottom-16 hidden lg:flex items-center gap-3 origin-left -rotate-90 translate-y-12">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue"></span>
+      <span class="font-mono text-xs tracking-widest text-ink-muted uppercase">04. Works</span>
+      <span class="w-12 h-px bg-hairline"></span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Left Column (Sticky info block) -->
+      <div class="lg:col-span-5 lg:sticky lg:top-28">
+        <span class="font-mono text-xs text-accent-blue uppercase tracking-widest block mb-4">/projects-showcase</span>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-[-0.05em] leading-[1.00] text-white mb-8 font-display">
+          Next-gen codebases <br />
+          demand <span class="text-ink-muted">focused logic.</span>
+        </h2>
+        <p class="text-ink-muted text-[15px] leading-[1.30] tracking-[-0.15px] mb-8 font-light font-sans">
+          A selection of projects that showcase my ability to write clean modular code, build APIs, and manage deployment networks.
+        </p>
+        <a 
+          href="https://github.com/ParampreetSingh23" 
+          target="_blank" 
+          rel="noreferrer"
+          class="px-[15px] py-[10px] rounded-[100px] bg-surface-1 hover:bg-surface-2 border border-hairline text-white font-sans text-[14px] font-medium tracking-[-0.14px] leading-none transition-colors text-center inline-flex items-center gap-2"
+        >
+          View GitHub
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right Column: Card stack with hairline dividers (Image 4 style) -->
+      <div class="lg:col-span-7 flex flex-col divide-y divide-hairline">
+        <!-- Project 1 -->
+        <div class="py-10 first:pt-0 group hover:translate-x-2 transition-transform duration-300">
+          <div class="flex justify-between items-start mb-4">
+            <span class="font-mono text-xs text-accent-blue">01 / FULL STACK</span>
+            <a href="https://github.com/ParampreetSingh23" target="_blank" rel="noreferrer" class="text-ink-muted hover:text-white transition-colors" aria-label="GitHub Repository">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </a>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-white mb-3 flex items-center justify-between font-display">
+            Student Attendance Tracker
+            <span class="text-accent-blue group-hover:translate-x-1.5 transition-transform">→</span>
+          </h3>
+          
+          <p class="text-ink-muted text-[14px] leading-[1.30] tracking-[-0.14px] font-light mb-6 font-sans">
+            A comprehensive web attendance management system featuring automated email alerts. Implemented full CRUD operations with MongoDB and designed a clean responsive UI using EJS templates for a seamless admin experience.
+          </p>
+          
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">Node.js</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">Express</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">MongoDB</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">EJS</span>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="py-10 group hover:translate-x-2 transition-transform duration-300">
+          <div class="flex justify-between items-start mb-4">
+            <span class="font-mono text-xs text-accent-blue">02 / FULL STACK</span>
+            <a href="https://github.com/ParampreetSingh23" target="_blank" rel="noreferrer" class="text-ink-muted hover:text-white transition-colors" aria-label="GitHub Repository">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </a>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-white mb-3 flex items-center justify-between font-display">
+            Campus Barter Platform
+            <span class="text-accent-blue group-hover:translate-x-1.5 transition-transform">→</span>
+          </h3>
+          
+          <p class="text-ink-muted text-[14px] leading-[1.30] tracking-[-0.14px] font-light mb-6 font-sans">
+            A secure campus-exclusive marketplace platform enabling university students to exchange products and services. Built with a Spring Boot backend, ReactJS frontend, REST API layers, and custom token session security.
+          </p>
+          
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">Spring Boot</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">React.js</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">REST API</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">Auth</span>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="py-10 last:pb-0 group hover:translate-x-2 transition-transform duration-300">
+          <div class="flex justify-between items-start mb-4">
+            <span class="font-mono text-xs text-accent-blue">03 / CORE JAVA & DB</span>
+            <a href="https://github.com/ParampreetSingh23" target="_blank" rel="noreferrer" class="text-ink-muted hover:text-white transition-colors" aria-label="GitHub Repository">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </a>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-white mb-3 flex items-center justify-between font-display">
+            CLI Attendance System
+            <span class="text-accent-blue group-hover:translate-x-1.5 transition-transform">→</span>
+          </h3>
+          
+          <p class="text-ink-muted text-[14px] leading-[1.30] tracking-[-0.14px] font-light mb-6 font-sans">
+            A command-line student attendance engine with SQL database persistence. Optimized using Binary Search Trees (BST) for student lookup and Stack/Queue modules for tracking session history.
+          </p>
+          
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">Core Java</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">MySQL</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">Data Structures</span>
+            <span class="px-2.5 py-1 rounded-[6px] bg-surface-1 border border-hairline font-mono text-[11px] text-ink-muted">BST Search</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION & TIMELINE SECTION (Pure Black Canvas, Asymmetric vertical track) -->
+  <section id="education" class="min-h-screen bg-canvas text-white relative overflow-hidden flex flex-col justify-center py-32 border-b border-hairline">
+    
+    <!-- Left side rotated indicator -->
+    <div class="absolute left-6 bottom-16 hidden lg:flex items-center gap-3 origin-left -rotate-90 translate-y-12">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue"></span>
+      <span class="font-mono text-xs tracking-widest text-ink-muted uppercase">05. Timeline</span>
+      <span class="w-12 h-px bg-hairline"></span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <!-- Left Column Header -->
+      <div class="lg:col-span-5 lg:sticky lg:top-28">
+        <span class="font-mono text-xs text-accent-blue uppercase tracking-widest block mb-4">/background-timeline</span>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-[-0.05em] leading-[1.00] text-white mb-8 font-display">
+          Academic path <br />
+          & <span class="text-ink-muted">credentials.</span>
+        </h2>
+        <p class="text-ink-muted text-[15px] leading-[1.30] tracking-[-0.15px] font-light font-sans">
+          A log of my educational background at Chitkara University and certification checkpoints.
+        </p>
+      </div>
+
+      <!-- Right Column: Asymmetric Timeline -->
+      <div class="lg:col-span-7 flex flex-col gap-12 lg:pl-12 border-l border-hairline relative ml-4 lg:ml-0">
+        
+        <!-- Timeline Item 1: B.Tech -->
+        <div class="relative pl-8 group">
+          <!-- Timeline Bullet -->
+          <span class="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent-blue border-4 border-canvas group-hover:scale-125 transition-transform duration-300"></span>
+          
+          <span class="font-mono text-xs text-accent-blue tracking-widest uppercase block mb-1">2023 — 2027 (EXPECTED)</span>
+          <h3 class="text-2xl font-bold text-white mb-2 font-display">Bachelor of Technology in Computer Science</h3>
+          <h4 class="text-base text-ink-muted font-mono mb-4">Chitkara University, Rajpura, Punjab</h4>
+          
+          <div class="p-6 rounded-[20px] bg-surface-1 border border-hairline font-sans">
+            <span class="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-2">Academic Profile</span>
+            <ul class="space-y-2 text-[14px] text-ink-muted font-light list-disc list-inside leading-relaxed">
+              <li>Currently enrolled in the <strong class="text-white font-medium">5th Semester</strong></li>
+              <li>Core coursework: Cloud Computing, AWS Cloud Architecture, Data Structures & Algorithms, DBMS, Software Engineering, and Full Stack Web Development</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Timeline Item 2: Certifications -->
+        <div class="relative pl-8 group">
+          <!-- Timeline Bullet -->
+          <span class="absolute left-[-5px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-600 border-4 border-canvas group-hover:scale-125 transition-transform duration-300"></span>
+          
+          <span class="font-mono text-xs text-ink-muted tracking-widest uppercase block mb-1">CREDENTIALS</span>
+          <h3 class="text-2xl font-bold text-white mb-6 font-display">Industry Certifications</h3>
+          
+          <div class="flex flex-col gap-4">
+            <!-- Cert 1 -->
+            <div class="flex items-center gap-4 p-4 rounded-[15px] bg-surface-1 border border-hairline">
+              <div class="w-10 h-10 rounded-lg bg-surface-2 border border-hairline flex items-center justify-center font-mono text-xs text-accent-blue font-bold">
+                IBM
+              </div>
+              <div>
+                <h4 class="text-[14px] font-bold text-white">Introduction to Agile Development & Scrum</h4>
+                <p class="text-xs text-ink-muted font-mono">Issued by IBM via Coursera</p>
+              </div>
+            </div>
+            
+            <!-- Cert 2 -->
+            <div class="flex items-center gap-4 p-4 rounded-[15px] bg-surface-1 border border-hairline">
+              <div class="w-10 h-10 rounded-lg bg-surface-2 border border-hairline flex items-center justify-center font-mono text-xs text-accent-blue font-bold">
+                IBM
+              </div>
+              <div>
+                <h4 class="text-[14px] font-bold text-white">Introduction to DevOps</h4>
+                <p class="text-xs text-ink-muted font-mono">Issued by IBM via Coursera</p>
+              </div>
+            </div>
+
+            <!-- Cert 3 -->
+            <div class="flex items-center gap-4 p-4 rounded-[15px] bg-surface-1 border border-hairline border-dashed">
+              <div class="w-10 h-10 rounded-lg bg-surface-2 border border-hairline flex items-center justify-center font-mono text-xs text-accent-blue font-bold">
+                AWS
+              </div>
+              <div>
+                <h4 class="text-[14px] font-bold text-white flex items-center gap-2">
+                  AWS Certified Cloud Practitioner
+                  <span class="px-2 py-0.5 rounded bg-accent-blue/15 text-accent-blue font-mono text-[9px]">IN PROGRESS</span>
+                </h4>
+                <p class="text-xs text-ink-muted font-mono">Targeting Completion: Q3 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION (Pure Black Canvas, White form text input cells) -->
+  <section id="contact" class="min-h-screen bg-canvas text-white relative overflow-hidden flex flex-col justify-center py-32">
+    
+    <!-- Left side rotated indicator -->
+    <div class="absolute left-6 bottom-16 hidden lg:flex items-center gap-3 origin-left -rotate-90 translate-y-12">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent-blue animate-ping"></span>
+      <span class="font-mono text-xs tracking-widest text-ink-muted uppercase">06. Connect</span>
+      <span class="w-12 h-px bg-hairline"></span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <!-- Left Column: Details -->
+      <div class="lg:col-span-5">
+        <span class="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-4">/contact-directory</span>
+        <h2 class="text-3xl md:text-5xl font-medium tracking-[-0.05em] leading-[1.20] text-white mb-8 font-display">
+          Let's construct <br />
+          something <span class="inline-block text-black bg-white px-3 py-1 my-1 rounded-[10px] font-semibold align-middle">exceptional.</span>
+        </h2>
+        <p class="text-ink-muted text-[15px] leading-[1.30] tracking-[-0.15px] mb-10 font-light font-sans">
+          Have an interesting project, a job opportunity, or just want to chat about DevOps setups and web applications? Drop me a line.
+        </p>
+
+        <!-- Direct Contact Info -->
+        <div class="space-y-6 font-mono text-[14px]">
+          <!-- Phone -->
+          <div class="flex items-center gap-4">
+            <span class="w-10 h-10 rounded-full bg-surface-1 border border-hairline text-white flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </span>
+            <div>
+              <span class="text-[10px] text-ink-muted block uppercase">Phone</span>
+              <a href="tel:+919517705655" class="text-sm font-bold text-white hover:underline">+91-9517705655</a>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="flex items-center gap-4">
+            <span class="w-10 h-10 rounded-full bg-surface-1 border border-hairline text-white flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </span>
+            <div class="flex-1">
+              <span class="text-[10px] text-ink-muted block uppercase">Email</span>
+              <div class="flex items-center gap-2">
+                <a href="mailto:parampreetsinghlall@gmail.com" class="text-sm font-bold text-white hover:underline">parampreetsinghlall@gmail.com</a>
+                <button 
+                  id="copy-email-btn"
+                  class="p-1 rounded hover:bg-surface-2 text-ink-muted hover:text-white transition-colors cursor-pointer"
+                  aria-label="Copy email to clipboard"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                  </svg>
+                </button>
+                <span id="copy-status" class="hidden text-[10px] bg-white text-black px-2 py-0.5 rounded font-mono">Copied!</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="flex items-center gap-4">
+            <span class="w-10 h-10 rounded-full bg-surface-1 border border-hairline text-white flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </span>
+            <div>
+              <span class="text-[10px] text-ink-muted block uppercase">Location</span>
+              <span class="text-sm font-bold text-white">Doraha, Punjab, India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Card-surface contact form (surface-1 block with hairline borders) -->
+      <div class="lg:col-span-7 lg:pl-12">
+        <form 
+          id="contact-form"
+          class="p-8 rounded-[20px] bg-surface-1 border border-hairline shadow-2xl flex flex-col gap-6"
+        >
+          <div>
+            <label for="name" class="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-2">Your Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              required
+              placeholder="Enter your name" 
+              class="w-full px-[14px] py-[10px] rounded-[10px] border border-hairline bg-canvas text-white placeholder-ink-muted focus:outline-none focus:border-accent-blue transition-colors text-[15px] font-sans font-light"
+            />
+          </div>
+          
+          <div>
+            <label for="email" class="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-2">Email Address</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              required
+              placeholder="you@example.com" 
+              class="w-full px-[14px] py-[10px] rounded-[10px] border border-hairline bg-canvas text-white placeholder-ink-muted focus:outline-none focus:border-accent-blue transition-colors text-[15px] font-sans font-light"
+            />
+          </div>
+          
+          <div>
+            <label for="message" class="font-mono text-xs text-ink-muted uppercase tracking-widest block mb-2">Your Message</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="4" 
+              required
+              placeholder="What would you like to build?" 
+              class="w-full px-[14px] py-[10px] rounded-[10px] border border-hairline bg-canvas text-white placeholder-ink-muted focus:outline-none focus:border-accent-blue transition-colors resize-none text-[15px] font-sans font-light"
+            ></textarea>
+          </div>
+          
+          <button 
+            type="submit" 
+            class="px-[15px] py-[12px] rounded-[100px] bg-white text-black font-sans text-[14px] font-medium tracking-[-0.14px] leading-none hover:bg-slate-200 transition-colors text-center flex items-center justify-center gap-2 group cursor-pointer"
+          >
+            Send Message 
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Venn Diagram script and Copy Email script -->
+  <script>
+    // Copy Email script
+    const copyBtn = document.getElementById('copy-email-btn');
+    const copyStatus = document.getElementById('copy-status');
+    const emailText = 'parampreetsinghlall@gmail.com';
+
+    if (copyBtn && copyStatus) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(emailText).then(() => {
+          copyStatus.classList.remove('hidden');
+          setTimeout(() => {
+            copyStatus.classList.add('hidden');
+          }, 2000);
+        });
+      });
+    }
+
+    // Interactive Venn Diagram script
+    const vennWeb = document.getElementById('venn-web');
+    const vennDevops = document.getElementById('venn-devops');
+    const vennProg = document.getElementById('venn-prog');
+    const vennIntersection = document.getElementById('venn-intersection');
+    
+    const skillsTitle = document.getElementById('skills-title');
+    const skillsDesc = document.getElementById('skills-desc');
+    const skillsContainer = document.getElementById('skills-container');
+
+    const skillsData = {
+      default: {
+        title: "My Tech Synthesis",
+        desc: "I build at the intersection of full-stack engineering, cloud architecture, and database performance. Hover over any circle in the diagram to inspect my specific skill domains.",
+        skills: [
+          "HTML/CSS", "React.js", "Next.js (Learning)", "Node.js", "Express.js", "Spring Boot",
+          "AWS (EC2, S3, RDS)", "Docker", "CI/CD Pipelines", "n8n Automation", "Linux / Bash",
+          "Java", "Data Structures (DSA)", "C++", "SQL", "MongoDB / MySQL", "Git & GitHub", "Postman / APIs"
+        ]
+      },
+      web: {
+        title: "Web Development",
+        desc: "Frontend and Backend systems designed for clean styling, responsive interactions, and scalable service layer architecture.",
+        skills: [
+          "HTML/CSS", "React.js", "Next.js (Learning)", "Node.js", "Express.js", "Spring Boot",
+          "REST APIs", "EJS", "Auth Sessions", "Prisma / Mongoose"
+        ]
+      },
+      devops: {
+        title: "Cloud & DevOps",
+        desc: "Automating server operations, containerized configurations, pipelines, and visual workflow recipes.",
+        skills: [
+          "AWS (EC2, S3, RDS)", "Docker", "CI/CD Pipelines", "n8n Automation", "Linux Terminal",
+          "Bash Scripting", "Git & GitHub"
+        ]
+      },
+      programming: {
+        title: "Programming & Databases",
+        desc: "High-performance programming languages, optimized data structures, and relational / document-store persistence.",
+        skills: [
+          "Java", "Data Structures (DSA)", "C++", "JavaScript", "SQL", "MongoDB", "MySQL",
+          "PostgreSQL", "BST Search Optimization", "Stack/Queue History"
+        ]
+      },
+      intersection: {
+        title: "Full Stack DevOps Engineer",
+        desc: "My core sweet spot. Integrating clean software architectures directly with automated deployment scripts, dockerized networks, and AWS infrastructure.",
+        skills: [
+          "End-to-End Systems", "Spring Boot + AWS", "React + Docker", "n8n Webhook Automations",
+          "CLI DB Utilities", "Git Actions CI/CD", "Bash Build Scripts"
+        ]
+      }
+    };
+
+    const updatePanel = (category: string) => {
+      const data = skillsData[category as keyof typeof skillsData] || skillsData.default;
+      
+      if (skillsTitle && skillsDesc && skillsContainer) {
+        skillsTitle.textContent = data.title;
+        skillsDesc.textContent = data.desc;
+        
+        // Render pills
+        skillsContainer.innerHTML = '';
+        data.skills.forEach(skill => {
+          const pill = document.createElement('span');
+          pill.className = `px-3 py-1.5 rounded-[6px] font-mono text-[13px] tracking-tight transition-all duration-300 ${
+            category === 'intersection' 
+              ? 'bg-accent-blue text-white border border-accent-blue animate-pulse' 
+              : 'bg-surface-1 text-white border border-hairline'
+          }`;
+          pill.textContent = skill;
+          skillsContainer.appendChild(pill);
+        });
+      }
+    };
+
+    // Attach hover events to Venn groups
+    const circles = [
+      { element: vennWeb, category: 'web' },
+      { element: vennDevops, category: 'devops' },
+      { element: vennProg, category: 'programming' },
+      { element: vennIntersection, category: 'intersection' }
+    ];
+
+    circles.forEach(item => {
+      if (item.element) {
+        item.element.addEventListener('mouseenter', () => updatePanel(item.category));
+        item.element.addEventListener('mouseleave', () => updatePanel('default'));
+      }
+    });
+
+    // Handle Contact Form Submission
+    const contactForm = document.getElementById('contact-form') as HTMLFormElement;
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for reaching out, Parampreet will get back to you shortly!');
+        contactForm.reset();
+      });
+    }
+  </script>
+</Layout>
