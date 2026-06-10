@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio-react-tailwind-eight.vercel.app/sitemap.xml
+Sitemap: https://parampreetsingh.dev/sitemap.xml
