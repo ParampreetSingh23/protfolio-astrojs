@@ -1,7 +1,0 @@
----
-import { ArrowUpRight, ArrowRight, ArrowDown, Terminal, GitBranch, Cpu, Layers, Plus, Menu, X } from 'lucide-static';
-const icons = { ArrowUpRight, ArrowRight, ArrowDown, Terminal, GitBranch, Cpu, Layers, Plus, Menu, X };
-interface Props { name?: keyof typeof icons; }
-const { name = 'ArrowUpRight' } = Astro.props;
----
-<span class="icon" aria-hidden="true" set:html={icons[name]} />
