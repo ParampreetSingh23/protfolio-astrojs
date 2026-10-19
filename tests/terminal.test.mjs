@@ -5,7 +5,9 @@ assert.deepEqual(runCommand('./github.sh').action, { type: 'browser', url: 'http
 assert.deepEqual(runCommand('bash linkedin.sh').action?.type, 'browser');
 assert.match(runCommand('./projects.sh').text, /drip/);
 assert.match(runCommand('./projects.sh DRIP').text, /AWS ECS/);
-assert.equal(runCommand('./projects.sh campusbarter').action?.url, 'https://campusbarter.onrender.com');
+assert.deepEqual(runCommand('./projects.sh campusbarter').action, { type: 'project', slug: 'campusbarter' });
+assert.deepEqual(openPath('~/Desktop/projects/drip.md').action, { type: 'project', slug: 'drip' });
+assert.match(runCommand('cat projects/campusbarter.md').text, /live:  https:\/\/campusbarter/);
 assert.match(runCommand('./projects.sh nope').text, /no project named/);
 assert.match(runCommand('./experience.sh').text, /Rabbitt AI/);
 assert.match(runCommand('./skills.sh').text, /BullMQ/);

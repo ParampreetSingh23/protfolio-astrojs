@@ -12,16 +12,16 @@ const desktop = listDir('~/Desktop');
     <p class="boot-skip">press any key to skip</p>
   </div>
 
-  <div id="os" class="os">
+  <div id="os" class="os" data-theme="aubergine">
     <header class="topbar">
       <span class="topbar-left">Activities <b>parampreet@portfolio</b></span>
       <time id="clock" class="topbar-clock"></time>
-      <span class="topbar-tray" aria-hidden="true"><Fragment set:html={ui.Wifi} /><Fragment set:html={ui.Volume2} /><Fragment set:html={ui.BatteryFull} /><Fragment set:html={ui.Power} /></span>
+      <span class="topbar-tray"><span aria-hidden="true"><Fragment set:html={ui.Wifi} /></span><button id="sound-toggle" aria-label="Sound off" title="Sound off" aria-pressed="false"><Fragment set:html={ui.VolumeX} /></button><span aria-hidden="true"><Fragment set:html={ui.BatteryFull} /></span><button id="restart" aria-label="Restart" title="Restart"><Fragment set:html={ui.Power} /></button></span>
     </header>
 
     <main class="desktop" id="desktop">
       <h1 class="sr-only">{person.name} — {person.role} portfolio</h1>
-      <div class="wallmark" aria-hidden="true">parampreet<span>@</span>portfolio<small>open a file · or run ./github.sh</small></div>
+      <div class="wallmark" aria-hidden="true">parampreet<span>@</span>portfolio<small>open a file · right-click for more · or run ./github.sh</small></div>
       <ul class="icons" aria-label="Desktop files">
         {desktop.map(name => (
           <li><button class="file-icon" data-path={`~/Desktop/${name}`}><span set:html={iconFor(name)} /><span class="file-name">{name}</span></button></li>
@@ -34,6 +34,7 @@ const desktop = listDir('~/Desktop');
       <button data-app="terminal" title="Terminal" aria-label="Terminal"><Fragment set:html={ui.SquareTerminal} /></button>
       <button data-app="browser" title="Browser" aria-label="Browser"><Fragment set:html={ui.Globe} /></button>
       <button data-app="files" title="Files" aria-label="Files"><Fragment set:html={ui.Folder} /></button>
+      <button data-app="project" title="Projects" aria-label="Projects"><Fragment set:html={ui.Layers} /></button>
       <button data-app="about" title="about.txt" aria-label="about.txt"><Fragment set:html={ui.FileText} /></button>
     </nav>
   </div>

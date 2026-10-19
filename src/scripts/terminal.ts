@@ -1,6 +1,6 @@
 import { person, projects, skillGroups, education, experience } from '../data/portfolio.ts';
 
-export type Action = { type: 'browser'; url: string } | { type: 'files'; path: string } | { type: 'editor'; path: string };
+export type Action = { type: 'project'; slug: string } | { type: 'browser'; url: string } | { type: 'files'; path: string } | { type: 'editor'; path: string };
 export interface TerminalResult { text: string; links?: { label: string; href: string }[]; clear?: boolean; cwd?: string; action?: Action; }
 
 const HOME = '~';
@@ -8,7 +8,7 @@ const DESKTOP = '~/Desktop';
 const PROJECTS = '~/Desktop/projects';
 
 const projectDoc = (p: typeof projects[number]) => [
-  `# ${p.name}`, `${p.type} · ${p.context}`, '', p.description, '', ...p.points.map(x => `- ${x}`), '', `stack: ${p.stack.join(', ')}`, ...(p.url ? [`link:  ${p.url}`] : []),
+  `# ${p.name}`, `${p.type} · ${p.context}`, '', p.description, '', ...p.points.map(x => `- ${x}`), '', `stack: ${p.stack.join(', ')}`, ...(p.live ? [`live:  ${p.live}`] : []), ...(p.repo ? [`repo:  ${p.repo}`] : []),
 ].join('\n');
 
 const projectList = () => projects.map(p => `  ${p.slug.padEnd(14)}${p.description}`).join('\n');
@@ -22,7 +22,7 @@ const scripts: Record<string, Script> = {
     if (!name) return { text: `Projects (${projects.length}):\n\n${projectList()}\n\nRun ./projects.sh <name> for details, e.g. ./projects.sh drip` };
     const p = projects.find(x => x.slug === name.toLowerCase().replace(/\.md$/, ''));
     if (!p) return { text: `projects.sh: no project named "${name.slice(0, 40)}"\n\n${projectList()}` };
-    return { text: projectDoc(p), ...(p.url ? { action: { type: 'browser' as const, url: p.url }, links: [{ label: p.url, href: p.url }] } : {}) };
+    return { text: projectDoc(p), action: { type: 'project', slug: p.slug } };
   } },
   'experience.sh': { src: 'cat ~/.experience', run: () => ({ text: [
     `${experience.role} @ ${experience.company}`, experience.period, '',
@@ -72,6 +72,7 @@ export function openPath(path: string): TerminalResult {
   if (isDir(path)) return { text: '', action: { type: 'files', path } };
   if (name.endsWith('.pdf')) return { text: '', action: { type: 'browser', url: `/${name}` } };
   if (name.endsWith('.sh')) return runCommand(`./${name}`, path.slice(0, path.lastIndexOf('/')));
+  if (path.startsWith(PROJECTS + '/')) return { text: '', action: { type: 'project', slug: name.replace(/\.md$/, '') } };
   if (path in files) return { text: '', action: { type: 'editor', path } };
   return { text: `open: ${name}: No such file` };
 }

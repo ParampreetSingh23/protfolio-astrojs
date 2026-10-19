@@ -14,31 +14,31 @@ export const education = { degree: 'B.Tech, Computer Science', school: 'Chitkara
 
 export const experience = { role: 'Software Developer Intern', company: 'Rabbitt AI', period: 'April 2026 — Present' };
 
-export interface Project { slug: string; name: string; type: string; context: string; description: string; stack: string[]; points: string[]; url?: string; }
+export interface Project { slug: string; name: string; type: string; context: string; description: string; stack: string[]; points: string[]; flow: string[]; live?: string; repo?: string; }
 export const projects: Project[] = [
-  { slug: 'tally', name: 'Tally Reconciliation', type: 'ACCOUNTING AUTOMATION', context: 'RABBITT AI / CLIENT PROJECT', description: 'Reconciliation and TallyPrime posting platform delivered end to end for 45+ accounting users.', stack: ['Next.js', 'React', 'Node.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Redis', 'BullMQ', 'Docker', 'Nginx', 'AWS EC2'], points: [
+  { slug: 'tally', flow: ['Invoice APIs · bank · Excel', 'Ingest + normalise', 'Reconcile 1:1', 'Exception review', 'Tally XML vouchers', 'Batch post · 13k'], name: 'Tally Reconciliation', type: 'ACCOUNTING AUTOMATION', context: 'RABBITT AI / CLIENT PROJECT', description: 'Reconciliation and TallyPrime posting platform delivered end to end for 45+ accounting users.', stack: ['Next.js', 'React', 'Node.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Redis', 'BullMQ', 'Docker', 'Nginx', 'AWS EC2'], points: [
     'Owned it end to end: requirements, client calls, demos, technical design, delivery.',
     'Next.js frontend, Node.js REST backend, separate BullMQ worker; Redis + PostgreSQL on RDS, Docker Compose behind Nginx on EC2.',
     'Ingestion from seven invoice APIs, payment-gateway/bank reports and email/Excel imports with configurable mappings and dedup.',
     'Strict one-to-one reconciliation engine with an exception-review workflow.',
     'Fault-tolerant batch posting of up to 13,000 TallyPrime vouchers: idempotency keys, verify-before-retry, resumable state, audit logs.',
   ] },
-  { slug: 'drip', name: 'DRIP', type: 'CODING ASSESSMENT PLATFORM', context: 'RABBITT AI / FULL STACK', description: 'Browser-based IDE sessions in isolated containers with automated grading and AI feedback.', stack: ['Node.js', 'Express', 'Next.js', 'React', 'TypeScript', 'MongoDB', 'WebSockets', 'Docker', 'AWS ECS', 'S3', 'OpenAI API', 'Zustand'], points: [
+  { slug: 'drip', flow: ['Browser IDE', 'WebSocket proxy', 'Session orchestrator', 'Docker on ECS', 'Grading + AI feedback'], name: 'DRIP', type: 'CODING ASSESSMENT PLATFORM', context: 'RABBITT AI / FULL STACK', description: 'Browser-based IDE sessions in isolated containers with automated grading and AI feedback.', stack: ['Node.js', 'Express', 'Next.js', 'React', 'TypeScript', 'MongoDB', 'WebSockets', 'Docker', 'AWS ECS', 'S3', 'OpenAI API', 'Zustand'], points: [
     'Users launch isolated IDE sessions, run test suites and get automated grading with AI-assisted feedback.',
     'Session orchestration provisioning per-user Docker containers on AWS ECS.',
     'WebSocket proxy routing traffic between the browser and container-hosted code-server.',
     'Express + Mongoose APIs with JWT auth and RBAC; S3 presigned URLs for file delivery.',
   ] },
-  { slug: 'cloudwatcher', name: 'CloudWatcher', type: 'CLOUD OBSERVABILITY', context: 'RABBITT AI / PRODUCTION WORK', description: 'CloudWatch metrics, threshold rules and SNS alerts, provisioned with reusable Terraform modules.', stack: ['Node.js', 'Python', 'AWS CloudWatch', 'SNS', 'IAM', 'Terraform'], points: [
+  { slug: 'cloudwatcher', flow: ['CloudWatch metrics', 'Threshold rules', 'SNS alerts', 'Terraform modules'], name: 'CloudWatcher', type: 'CLOUD OBSERVABILITY', context: 'RABBITT AI / PRODUCTION WORK', description: 'CloudWatch metrics, threshold rules and SNS alerts, provisioned with reusable Terraform modules.', stack: ['Node.js', 'Python', 'AWS CloudWatch', 'SNS', 'IAM', 'Terraform'], points: [
     'Node.js and Python services pull CloudWatch metrics, evaluate thresholds and publish SNS alerts.',
     'Reusable Terraform modules for alarms, SNS topics and IAM roles, shipped through PR reviews.',
   ] },
-  { slug: 'tisiops', name: 'TisiOps', type: 'AI-POWERED DEVOPS', context: 'PERSONAL PROJECT / FOUNDER & DEVELOPER', description: 'AI agents plan provisioning and deployment through a Plan, Validate, Approve, Execute, Verify pipeline.', stack: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Prisma', 'Redis', 'BullMQ', 'Docker', 'Terraform', 'AWS EC2', 'Clerk', 'OpenTelemetry'], url: 'https://github.com/ParampreetSingh23/TisiOps', points: [
+  { slug: 'tisiops', flow: ['Plan', 'Validate', 'Approve', 'Execute', 'Verify'], name: 'TisiOps', type: 'AI-POWERED DEVOPS', context: 'PERSONAL PROJECT / FOUNDER & DEVELOPER', description: 'AI agents plan provisioning and deployment through a Plan, Validate, Approve, Execute, Verify pipeline.', stack: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Prisma', 'Redis', 'BullMQ', 'Docker', 'Terraform', 'AWS EC2', 'Clerk', 'OpenTelemetry'], repo: 'https://github.com/ParampreetSingh23/TisiOps', points: [
     'Specialised agents for provisioning, deployment, staging, monitoring and diagnosis; no direct LLM shell access.',
     'Production-to-staging automation: analyse repo + server, plan, provision EC2 with Terraform, deploy with Docker.',
     'Async execution on Redis/BullMQ with retries, idempotency and SSH readiness checks; OpenTelemetry/SigNoz monitoring.',
   ] },
-  { slug: 'campusbarter', name: 'CampusBarter', type: 'CAMPUS MARKETPLACE', context: 'PERSONAL PROJECT / FULL STACK', description: 'Peer-to-peer campus marketplace with OAuth login and real-time chat.', stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Drizzle ORM', 'WebSockets'], url: 'https://campusbarter.onrender.com', points: [
+  { slug: 'campusbarter', flow: ['React client', 'Express API', 'Passport auth', 'WebSocket chat', 'PostgreSQL · Drizzle'], name: 'CampusBarter', type: 'CAMPUS MARKETPLACE', context: 'PERSONAL PROJECT / FULL STACK', description: 'Peer-to-peer campus marketplace with OAuth login and real-time chat.', stack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Drizzle ORM', 'WebSockets'], live: 'https://campusbarter.onrender.com', repo: 'https://github.com/ParampreetSingh23/CampusBarter', points: [
     'Passport.js sessions (Google OAuth + local) and real-time chat over WebSockets.',
     'Serverless PostgreSQL with Drizzle ORM, React Query caching and Zod validation; deployed on Render.',
   ] },

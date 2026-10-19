@@ -1,5 +1,5 @@
 export const logos: Record<string,string> = {
-  'AWS':'aws', 'AWS EC2':'aws-ec2', 'EC2':'aws-ec2', 'ECS':'aws-ecs', 'ECR':'aws-ecr', 'EKS':'aws-eks', 'S3':'aws-s3', 'RDS':'aws-rds',
+  'AWS':'aws', 'AWS EC2':'aws-ec2', 'EC2':'aws-ec2', 'ECS':'aws-ecs', 'AWS ECS':'aws-ecs', 'ECR':'aws-ecr', 'EKS':'aws-eks', 'S3':'aws-s3', 'RDS':'aws-rds',
   'AWS CloudWatch':'aws-cloudwatch', 'CloudWatch':'aws-cloudwatch', 'SNS':'aws-sns', 'IAM':'aws-iam',
   'Java':'java', 'Python':'python', 'C++':'c-plusplus', 'JavaScript':'javascript', 'TypeScript':'typescript-icon', 'JavaScript / TypeScript':'typescript-icon', 'Bash':'bash-icon',
   'React':'react', 'Next.js':'nextjs-icon', 'Node.js':'nodejs-icon', 'Express':'express', 'Tailwind CSS':'tailwindcss-icon',

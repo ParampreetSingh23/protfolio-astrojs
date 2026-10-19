@@ -1,6 +1,7 @@
 import { runCommand, openPath, listDir, isDir, readFile, resolvePath, type TerminalResult, type Action } from './terminal';
 import { iconFor, ui } from './icons';
-import { person } from '../data/portfolio';
+import { person, projects } from '../data/portfolio';
+import { logos } from '../data/logos';
 
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector<T>(sel)!;
 const coarse = matchMedia('(pointer: coarse)').matches;
@@ -14,6 +15,47 @@ function h(tag: string, attrs: Record<string, string> = {}, ...kids: (Node | str
   return el;
 }
 const svg = (markup: string) => { const s = h('span', { class: 'ico', 'aria-hidden': 'true' }); s.innerHTML = markup; return s; };
+
+// Storage can throw (private mode, blocked site data); preferences are just conveniences.
+const load = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
+const save = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch {} };
+
+/* ---------------- sound (synthesised, off by default) ---------------- */
+let soundOn = load('os-sound') === 'on';
+let audio: AudioContext | null = null;
+const tones = { open: [520, 780], close: [620, 410], tick: [880], error: [190, 140] };
+function sfx(kind: keyof typeof tones) {
+  if (!soundOn) return;
+  audio ??= new AudioContext();
+  const a = audio;
+  tones[kind].forEach((f, i) => {
+    const o = a.createOscillator(), g = a.createGain(), t = a.currentTime + i * 0.07;
+    o.type = kind === 'error' ? 'square' : 'sine';
+    o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(kind === 'error' ? 0.03 : 0.07, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+    o.connect(g).connect(a.destination);
+    o.start(t); o.stop(t + 0.13);
+  });
+}
+const soundBtn = $<HTMLButtonElement>('#sound-toggle');
+function setSound(on: boolean) {
+  soundOn = on; save('os-sound', on ? 'on' : 'off');
+  soundBtn.innerHTML = on ? ui.Volume2 : ui.VolumeX;
+  soundBtn.setAttribute('aria-pressed', String(on));
+  soundBtn.title = soundBtn.ariaLabel = on ? 'Sound on' : 'Sound off';
+  sfx('tick');
+}
+setSound(soundOn);
+soundBtn.addEventListener('click', () => setSound(!soundOn));
+$('#restart').addEventListener('click', () => location.reload());
+
+/* ---------------- themes ---------------- */
+const themes = ['aubergine', 'ocean', 'forest', 'graphite'];
+const osEl = $('#os');
+function setTheme(t: string) { osEl.dataset.theme = themes.includes(t) ? t : themes[0]; save('os-theme', osEl.dataset.theme); }
+setTheme(load('os-theme') ?? themes[0]);
 
 /* ---------------- boot ---------------- */
 const bootLines = [
@@ -95,7 +137,7 @@ function openWindow(id: string, title: string, icon: string, size: [number, numb
   el.querySelectorAll<HTMLButtonElement>('.win-ctrls button').forEach(b => b.addEventListener('click', e => {
     e.stopPropagation();
     const act = b.dataset.act;
-    if (act === 'close') { el.remove(); wins.delete(id); btn!.classList.remove('running', 'active'); if (btn!.hasAttribute('data-temp')) btn!.remove(); }
+    if (act === 'close') { sfx('close'); el.remove(); wins.delete(id); btn!.classList.remove('running', 'active'); if (btn!.hasAttribute('data-temp')) btn!.remove(); }
     if (act === 'min') { el.hidden = true; btn!.classList.remove('active'); }
     if (act === 'max') el.classList.toggle('max');
   }));
@@ -118,6 +160,7 @@ function openWindow(id: string, title: string, icon: string, size: [number, numb
   });
 
   layer.append(el);
+  sfx('open');
   build(w.body, w);
   focus(w);
   return w;
@@ -133,6 +176,7 @@ dock.addEventListener('click', e => {
   else if (id === 'browser') openBrowser('about:home');
   else if (id === 'files') openFiles('~/Desktop');
   else if (id === 'about') openEditor('~/Desktop/about.txt');
+  else if (id === 'project') openProject(projects[0].slug);
 });
 
 function act(action?: Action) {
@@ -140,6 +184,7 @@ function act(action?: Action) {
   if (action.type === 'browser') openBrowser(action.url);
   if (action.type === 'files') openFiles(action.path);
   if (action.type === 'editor') openEditor(action.path);
+  if (action.type === 'project') openProject(action.slug);
 }
 
 /** Double-click on any file: scripts run visibly in the terminal, everything else opens its app. */
@@ -172,6 +217,7 @@ function openTerminal(): Term {
     const r = runCommand(cmd, cwd);
     if (r.cwd) { cwd = r.cwd; promptEl.replaceChildren(...prompt()); }
     print(r);
+    sfx(r.text.includes('command not found') || r.text.includes('No such') ? 'error' : 'tick');
     out.parentElement!.scrollTop = out.parentElement!.scrollHeight;
     act(r.action);
   };
@@ -233,6 +279,48 @@ function openEditor(path: string) {
     body.classList.add('editor');
     body.append(h('pre', { tabindex: '0' }, readFile(path) ?? ''));
   });
+}
+
+/* ---------------- project app ---------------- */
+const plated = ['aws', 'nextjs-icon', 'prisma', 'express', 'github-icon'];
+function openProject(slug: string) {
+  const i = projects.findIndex(p => p.slug === slug);
+  if (i < 0) return;
+  const p = projects[i], n = projects.length;
+  const prev = projects[(i - 1 + n) % n], next = projects[(i + 1) % n];
+  const w = openWindow('project', 'Projects', ui.Layers, [860, 620], body => {
+    body.tabIndex = -1;
+    body.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      const cur = projects.findIndex(x => x.slug === body.dataset.slug);
+      openProject(projects[(cur + (e.key === 'ArrowLeft' ? n - 1 : 1)) % n].slug);
+    });
+  });
+  w.body.className = 'win-body proj';
+  w.body.dataset.slug = slug;
+  $('.win-title', w.el).lastChild!.textContent = `${p.name} — Projects`;
+  const btn = (label: string, icon: string, fn: () => void, cls = '') => { const b = h('button', { class: `proj-btn ${cls}` }, svg(icon), label); b.addEventListener('click', fn); return b; };
+  w.body.replaceChildren(
+    h('header', { class: 'proj-hero' },
+      h('span', { class: 'proj-eyebrow' }, `${p.type} · ${p.context}`), h('h2', {}, p.name), h('p', {}, p.description),
+      h('div', { class: 'proj-actions' },
+        p.live ? btn('Live demo', ui.Play, () => openBrowser(p.live!), 'primary') : null,
+        p.repo ? h('a', { class: 'proj-btn', href: p.repo, target: '_blank', rel: 'noopener' }, svg(ui.FolderGit2), 'Source ↗') : null,
+        btn('Open in terminal', ui.SquareTerminal, () => openTerminal().exec(`cat ~/Desktop/projects/${p.slug}.md`)))),
+    h('section', {}, h('h3', {}, 'How it flows'),
+      h('ol', { class: 'flow' }, ...p.flow.map((step, k) => h('li', { style: `--i:${k}` }, h('span', { class: 'flow-n' }, String(k + 1).padStart(2, '0')), step)))),
+    h('section', {}, h('h3', {}, 'Highlights'), h('ul', { class: 'proj-points' }, ...p.points.map(x => h('li', {}, x)))),
+    h('section', {}, h('h3', {}, 'Stack'),
+      h('ul', { class: 'chips' }, ...p.stack.map(t => {
+        const f = logos[t];
+        return h('li', {}, f ? h('img', { src: `/logos/${f}.svg`, alt: '', width: '16', height: '16', ...(plated.includes(f) ? { class: 'plate' } : {}) }) : null, t);
+      }))),
+    h('nav', { class: 'proj-nav', 'aria-label': 'Other projects' },
+      btn(prev.name, ui.ChevronLeft, () => openProject(prev.slug)),
+      h('span', { class: 'proj-count' }, `${i + 1} / ${n}  ·  ← → keys`),
+      btn(next.name, ui.ChevronRight, () => openProject(next.slug), 'rev')),
+  );
+  w.body.scrollTop = 0;
 }
 
 /* ---------------- browser ---------------- */
@@ -314,6 +402,78 @@ function openBrowser(url: string) {
     go(url);
   });
 }
+
+/* ---------------- context menu ---------------- */
+type Item = [label: string, icon: string, run: () => void] | 'sep' | HTMLElement;
+let menu: HTMLElement | null = null;
+const closeMenu = () => { menu?.remove(); menu = null; };
+
+function showMenu(x: number, y: number, items: Item[]) {
+  closeMenu();
+  const m = h('div', { class: 'ctx', role: 'menu' });
+  for (const it of items) {
+    if (it === 'sep') m.append(h('hr'));
+    else if (it instanceof HTMLElement) m.append(it);
+    else {
+      const b = h('button', { role: 'menuitem' }, svg(it[1]), it[0]);
+      b.addEventListener('click', () => { closeMenu(); sfx('tick'); it[2](); });
+      m.append(b);
+    }
+  }
+  osEl.append(m);
+  const r = m.getBoundingClientRect();
+  m.style.left = `${Math.max(4, Math.min(x, innerWidth - r.width - 6))}px`;
+  m.style.top = `${Math.max(4, Math.min(y, innerHeight - r.height - 6))}px`;
+  m.querySelector<HTMLElement>('button')?.focus({ preventScroll: true });
+  menu = m;
+}
+
+function desktopMenu(): Item[] {
+  const swatches = h('div', { class: 'ctx-themes' }, h('span', {}, svg(ui.Palette), 'Wallpaper'),
+    h('div', {}, ...themes.map(t => {
+      const b = h('button', { 'data-theme': t, 'aria-label': `${t} wallpaper`, title: t, ...(osEl.dataset.theme === t ? { 'aria-current': 'true' } : {}) });
+      b.addEventListener('click', () => { setTheme(t); sfx('tick'); closeMenu(); });
+      return b;
+    })));
+  return [
+    ['Open Terminal', ui.SquareTerminal, () => openTerminal()],
+    ['Open Files', ui.Folder, () => openFiles('~/Desktop')],
+    ['Browse projects', ui.Layers, () => openProject(projects[0].slug)],
+    'sep', swatches, 'sep',
+    [soundOn ? 'Mute sounds' : 'Turn sounds on', soundOn ? ui.VolumeX : ui.Volume2, () => setSound(!soundOn)],
+    ['About this computer', ui.Info, () => openTerminal().exec('neofetch')],
+    ['Restart', ui.RefreshCw, () => location.reload()],
+  ];
+}
+
+function fileMenu(path: string): Item[] {
+  const name = path.split('/').pop()!;
+  const items: Item[] = [[name.endsWith('.sh') ? 'Run' : 'Open', name.endsWith('.sh') ? ui.Play : ui.ExternalLink, () => launch(path)]];
+  if (isDir(path)) items.push(['Open in Terminal', ui.SquareTerminal, () => { const t = openTerminal(); t.exec(`cd ${path}`); t.exec('ls'); }]);
+  else if (!name.endsWith('.pdf')) items.push([name.endsWith('.sh') ? 'View source' : 'Show in Terminal', ui.SquareTerminal, () => openTerminal().exec(`cat ${path}`)]);
+  if (name.endsWith('.md')) items.push(['Open as plain text', ui.FileText, () => openEditor(path)]);
+  return items;
+}
+
+document.addEventListener('contextmenu', e => {
+  const t = e.target as Element;
+  const icon = t.closest<HTMLElement>('.file-icon');
+  if (!icon && (t.closest('.win') || !t.closest('.desktop'))) return; // windows keep the native menu
+  e.preventDefault();
+  icon?.classList.add('selected');
+  showMenu(e.clientX, e.clientY, icon ? fileMenu(icon.dataset.path!) : desktopMenu());
+});
+document.addEventListener('pointerdown', e => { if (menu && !menu.contains(e.target as Node)) closeMenu(); }, true);
+document.addEventListener('keydown', e => {
+  if (!menu) return;
+  if (e.key === 'Escape') return closeMenu();
+  if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+  e.preventDefault();
+  const items = [...menu.querySelectorAll<HTMLElement>('button')];
+  const k = items.indexOf(document.activeElement as HTMLElement);
+  items[(k + (e.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length]?.focus();
+});
+addEventListener('resize', closeMenu);
 
 /* ---------------- desktop ---------------- */
 document.addEventListener('click', e => {
