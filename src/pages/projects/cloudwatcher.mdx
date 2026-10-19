@@ -1,0 +1,24 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: cloudwatcher
+title: Cloud Observability Tool
+description: CloudWatcher is a cloud observability tool by Parampreet Singh that pulls AWS CloudWatch metrics, evaluates threshold rules and sends Amazon SNS alerts, provisioned with reusable Terraform modules.
+---
+
+## What is CloudWatcher?
+
+CloudWatcher is a cloud observability tool Parampreet Singh worked on at Rabbitt AI. It makes AWS infrastructure easier to watch. Services written in Node.js and Python pull metrics from AWS CloudWatch and evaluate them against threshold rules. When a threshold is crossed, they publish automated alerts through Amazon SNS. The supporting infrastructure is defined as code. Reusable, version-controlled Terraform modules provision the CloudWatch alarms, SNS topics and IAM roles the tool depends on. Those modules were shipped through feature branches, pull-request code reviews and issue-based contributions. The result is monitoring that can be reviewed, reproduced and extended like any other code in the repository.
+
+## How does it work?
+
+1. **Collect.** Node.js and Python services pull metrics from AWS CloudWatch using the AWS SDK.
+2. **Evaluate.** Each metric is checked against threshold rules.
+3. **Alert.** Breaches are published to Amazon SNS topics, which fan out the notifications.
+
+## Why Terraform modules?
+
+Alarms, SNS topics and IAM roles are defined in **reusable Terraform modules**. Adding monitoring for a new service means reusing a module, not clicking through the console. Every change goes through version control and review.
+
+## How was it built?
+
+The tool was built collaboratively through feature branches, pull-request code reviews and issue-based contributions on GitHub.

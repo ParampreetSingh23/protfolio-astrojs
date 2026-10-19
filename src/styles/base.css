@@ -1,0 +1,29 @@
+/* Shared tokens, fonts and reset for the desktop and the plain-HTML project pages. */
+@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/space-grotesk-latin.woff2') format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2'); }
+:root { color-scheme: dark; --font-sans: 'Space Grotesk', system-ui, sans-serif; --font-mono: 'JetBrains Mono', ui-monospace, monospace; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-weight: 500; }
+::selection { background: var(--os-accent); color: #111; }
+:focus-visible { outline: 2px solid var(--os-accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition: none !important; } }
+:root {
+  --os-bar: #0e0e0d;
+  --os-win: #1d1d1b;
+  --os-win-bar: #2a2a27;
+  --os-border: rgba(255,255,255,.09);
+  --os-text: #ecebe6;
+  --os-muted: #9a978f;
+  --os-accent: #ff6b35;
+  --os-ok: #8ae234;
+  --os-path: #729fcf;
+  --os-term: #0f0f0e;
+  --topbar-h: 32px;
+  --dock-h: 64px;
+}

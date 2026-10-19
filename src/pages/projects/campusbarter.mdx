@@ -1,0 +1,24 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: campusbarter
+title: Campus Marketplace Web App
+description: CampusBarter is a live peer-to-peer campus marketplace built by Parampreet Singh with React, Express, PostgreSQL and Drizzle ORM, featuring Google OAuth login and real-time WebSocket chat.
+---
+
+## What is CampusBarter?
+
+CampusBarter is a peer-to-peer campus marketplace that Parampreet Singh designed and built as a full-stack web application. Students can list items, find what others are offering and talk to each other in real time. Authentication uses Passport.js sessions with both Google OAuth and local login. Conversations happen over WebSockets, so messages arrive instantly. Data lives in serverless PostgreSQL with a relational schema written in Drizzle ORM for type-safe queries. On the client, React Query handles server-state caching and Zod validates input. The app is styled with Tailwind CSS, deployed on Render and [live at campusbarter.onrender.com](https://campusbarter.onrender.com).
+
+## How is it built?
+
+- **Frontend:** React, React Query for server-state caching, Tailwind CSS.
+- **Backend:** Node.js and Express with Passport.js session authentication (Google OAuth + local).
+- **Real time:** WebSocket chat between buyers and sellers.
+- **Data:** serverless PostgreSQL, Drizzle ORM schema, Zod validation.
+- **Hosting:** Render.
+
+## Why Drizzle and Zod?
+
+Drizzle keeps database queries type-safe from schema to handler, and Zod validates every input at the boundary. Together they catch most data bugs before they reach the database.
+
+Try the [live app](https://campusbarter.onrender.com) or read the [source on GitHub](https://github.com/ParampreetSingh23/CampusBarter).

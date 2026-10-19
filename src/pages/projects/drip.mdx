@@ -1,0 +1,30 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: drip
+title: Full-Stack Coding Assessment Platform
+description: DRIP is a coding-assessment platform built by Parampreet Singh at Rabbitt AI with isolated browser IDE sessions on AWS ECS, WebSocket proxying, automated grading and OpenAI-powered feedback.
+---
+
+## What is DRIP?
+
+DRIP is a full-stack coding-assessment platform Parampreet Singh engineered at Rabbitt AI. Users launch an isolated, browser-based IDE session, run test suites and submit solutions. They then receive automated grading with AI-assisted feedback from the OpenAI API. Each session runs in its own Docker container on AWS ECS. A session-orchestration service provisions the right container for the workload: Python/ML, cloud, or React/Node. It tracks every session and attempt in MongoDB. The browser talks to the container-hosted code-server through a WebSocket proxy layer. The rest of the platform is built with Node.js, Express.js, Mongoose, a Next.js App Router frontend in TypeScript, Zustand and Amazon S3.
+
+## How are sessions orchestrated?
+
+- **Per-user Docker containers on AWS ECS** keep candidates isolated from each other and from the platform.
+- The orchestrator chooses the container image by workload type: Python/ML, cloud, or React/Node.
+- The **session and attempt lifecycle** lives in MongoDB, so a session can be tracked from launch to submission.
+
+## How does the browser reach the container?
+
+A **WebSocket proxy layer** routes real-time, bidirectional traffic between the browser and container-hosted code-server instances. The IDE feels local while the code runs remotely.
+
+## How is the API structured and secured?
+
+- Modular RESTful APIs with Express.js and Mongoose.
+- **JWT authentication and role-based access control** across students, administrators, classrooms, assessments, sessions and attempts.
+- File delivery goes through **Amazon S3 presigned URLs**, which takes load off the backend.
+
+## What does the frontend look like?
+
+A Next.js App Router frontend written in TypeScript, with centralised Zustand stores for session and assessment state.

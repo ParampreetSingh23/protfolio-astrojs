@@ -1,0 +1,37 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: tisiops
+title: AI-Powered DevOps Platform
+description: TisiOps is an AI-powered DevOps platform founded and built by Parampreet Singh, where AI agents plan infrastructure work through a Plan, Validate, Approve, Execute, Verify pipeline on AWS.
+---
+
+## What is TisiOps?
+
+TisiOps is an AI-powered DevOps platform that Parampreet Singh founded and builds as a personal project. Specialised AI agents plan cloud provisioning, deployment, staging, monitoring and infrastructure diagnosis. Their plans never run directly. Every operation passes through a **Plan, Validate, Approve, Execute, Verify** pipeline, so the agents propose changes and controlled workers carry them out. An LLM never gets raw shell access. The platform analyses GitHub repositories and live servers to detect runtime, services and dependencies. It generates isolated staging plans, provisions AWS EC2 with Terraform and deploys with Docker. It is built with Next.js, TypeScript, Node.js, PostgreSQL, Prisma, Redis, BullMQ, Terraform, Clerk and OpenTelemetry.
+
+## Why not let the AI run commands directly?
+
+Proposing an infrastructure change and executing it are different responsibilities. Each step is explicit in TisiOps:
+
+```text
+AI agent → PLAN → VALIDATE → APPROVE → EXECUTE (BullMQ worker) → VERIFY
+```
+
+A human-approved plan is executed by a controlled worker, then checked against what was intended.
+
+## How does production-to-staging work?
+
+1. Analyse the GitHub repository and the live server.
+2. Detect the runtime, services and dependencies.
+3. Generate an isolated staging plan.
+4. Provision AWS EC2 with Terraform.
+5. Deploy with Docker and verify.
+
+## How is execution made reliable?
+
+- Asynchronous jobs on **Redis/BullMQ** with retries, idempotency and job tracking.
+- **SSH readiness checks** before any remote work starts.
+- Job state persisted in **PostgreSQL** through Prisma.
+- **OpenTelemetry + SigNoz** monitoring, and **Clerk** for user-scoped security.
+
+The source is on [GitHub](https://github.com/ParampreetSingh23/TisiOps).

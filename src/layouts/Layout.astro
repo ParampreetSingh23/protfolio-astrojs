@@ -1,227 +1,66 @@
 ---
-import '../styles/global.css';
-
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const { 
-  title = "Parampreet Singh | Software Engineer & Full Stack Developer", 
-  description = "Developer portfolio of Parampreet Singh, a Software Engineer specializing in Full Stack Web Development, Cloud Computing, and DevOps systems."
+import { person, experience, skillGroups, updated } from '../data/portfolio';
+interface Props { title?: string; description?: string; type?: 'website' | 'article'; schema?: Record<string, unknown>[]; }
+const {
+  title = 'Parampreet Singh — Software Developer | Full-Stack, Node.js, Next.js, AWS',
+  description = 'Parampreet Singh is a full-stack software developer (TypeScript, Node.js, Next.js, AWS) and Software Developer Intern at Rabbitt AI. Explore projects through a Linux-style desktop portfolio.',
+  type = 'website',
+  schema = [],
 } = Astro.props;
+const site = person.site;
+const canonical = new URL(Astro.url.pathname, site).href;
+const image = `${site}/og-image.png`;
+const personId = `${site}/#person`;
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person', '@id': personId, name: person.name, url: `${site}/`, image: `${site}/images/profile/parampreet-cutout.png`,
+      jobTitle: experience.role, description: person.summary, email: `mailto:${person.email}`,
+      worksFor: { '@type': 'Organization', name: experience.company },
+      affiliation: { '@type': 'CollegeOrUniversity', name: 'Chitkara University', address: { '@type': 'PostalAddress', addressLocality: 'Rajpura', addressRegion: 'Punjab', addressCountry: 'IN' } },
+      address: { '@type': 'PostalAddress', addressLocality: 'Doraha', addressRegion: 'Punjab', addressCountry: 'IN' },
+      knowsAbout: skillGroups.flatMap(g => g.items.split(' / ')).slice(0, 40),
+      sameAs: [person.github, person.linkedin],
+    },
+    { '@type': 'WebSite', '@id': `${site}/#website`, url: `${site}/`, name: `${person.name} — Portfolio`, inLanguage: 'en', publisher: { '@id': personId } },
+    ...schema,
+  ],
+};
 ---
-
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- SEO Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0B0B0A" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="Parampreet Singh, Software Engineer, Full Stack Developer, DevOps, Cloud Computing, AWS, Java, React, Chitkara University" />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Parampreet Singh" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href="https://parampreetsingh.dev/" />
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Parampreet Singh | Portfolio" />
+    <meta name="author" content={person.name} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={`${person.name} — Portfolio`} />
+    <meta property="og:locale" content="en_IN" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://parampreetsingh.dev/" />
-    <meta property="og:image" content="https://parampreetsingh.dev/og-image.png" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
     <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="1200" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://parampreetsingh.dev/og-image.png" />
-
-    <!-- Icons -->
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Parampreet Singh — Software Developer. A Linux desktop portfolio." />
+    {type === 'article' && <meta property="article:modified_time" content={updated} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    
-    <!-- Google Fonts Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- JSON-LD Person Schema for SEO -->
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Parampreet Singh",
-        "url": "https://parampreetsingh.dev/",
-        "jobTitle": "Software Engineer & Full Stack Developer",
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Chitkara University"
-        },
-        "sameAs": [
-          "https://github.com/ParampreetSingh23",
-          "https://www.linkedin.com/in/parampreet-singh-4a3396271/"
-        ],
-        "knowsAbout": [
-          "Software Engineering",
-          "Web Development",
-          "DevOps",
-          "Cloud Computing",
-          "AWS",
-          "Docker",
-          "Java",
-          "React",
-          "Node.js"
-        ],
-        "telephone": "+91-9517705655",
-        "email": "parampreetsinghlall@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Doraha",
-          "addressRegion": "Punjab",
-          "addressCountry": "India"
-        }
-      }
-    </script>
+    <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(graph).replace(/</g, '\\u003c')} />
   </head>
-  <body class="bg-canvas text-white min-h-screen relative font-sans antialiased select-text">
-    <!-- Faint Global Noise Texture -->
-    <div class="fixed inset-0 bg-noise z-50 pointer-events-none"></div>
-    <div class="fixed inset-0 bg-grid z-0 pointer-events-none opacity-50"></div>
-    
-    <!-- Header/Navbar (h-56px as per DESIGN.md top-nav specs) -->
-    <header class="fixed top-0 left-0 w-full z-40 border-b border-hairline backdrop-blur-md bg-canvas/80">
-      <div class="max-w-7xl mx-auto px-6 h-[56px] flex items-center justify-between">
-        <a href="#home" class="flex items-center gap-2 group">
-          <span class="font-display text-sm font-semibold tracking-[-0.5px] text-white flex items-center gap-1.5">
-            Parampreet Singh
-            <span class="w-1.5 h-1.5 rounded-full bg-accent-blue inline-block"></span>
-          </span>
-        </a>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex items-center gap-6 text-[13px] font-medium text-ink-muted">
-          <a href="#home" class="hover:text-white transition-colors">01. Home</a>
-          <a href="#about" class="hover:text-white transition-colors">02. About</a>
-          <a href="#skills" class="hover:text-white transition-colors">03. Skills</a>
-          <a href="#projects" class="hover:text-white transition-colors">04. Projects</a>
-          <a href="#education" class="hover:text-white transition-colors">05. Education</a>
-          <a href="#contact" class="hover:text-white transition-colors">06. Contact</a>
-        </nav>
-
-        <!-- Right Action Buttons (button-secondary and button-primary) -->
-        <div class="hidden md:flex items-center gap-3">
-          <a 
-            href="#contact" 
-            class="px-[15px] py-[10px] rounded-[100px] bg-white text-black font-sans text-[14px] font-medium tracking-[-0.14px] leading-none hover:bg-slate-200 transition-colors shadow-sm"
-          >
-            Get in touch
-          </a>
-        </div>
-
-        <!-- Mobile Menu Toggle -->
-        <button 
-          id="menu-toggle"
-          class="md:hidden p-2 text-ink-muted hover:text-white focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile Navigation Drawer -->
-      <div 
-        id="mobile-menu" 
-        class="hidden md:hidden absolute top-[56px] left-0 w-full bg-canvas/95 border-b border-hairline backdrop-blur-lg flex flex-col px-6 py-6 gap-4 text-[15px] font-medium text-ink-muted transition-all duration-300"
-      >
-        <a href="#home" class="hover:text-white py-2 border-b border-hairline-soft">01. Home</a>
-        <a href="#about" class="hover:text-white py-2 border-b border-hairline-soft">02. About</a>
-        <a href="#skills" class="hover:text-white py-2 border-b border-hairline-soft">03. Skills</a>
-        <a href="#projects" class="hover:text-white py-2 border-b border-hairline-soft">04. Projects</a>
-        <a href="#education" class="hover:text-white py-2 border-b border-hairline-soft">05. Education</a>
-        <a href="#contact" class="hover:text-white py-2">06. Contact</a>
-        <a 
-          href="#contact" 
-          class="mt-2 text-center text-black bg-white rounded-[100px] py-[10px] text-[14px] font-medium"
-        >
-          Get in touch
-        </a>
-      </div>
-    </header>
-
-    <main class="relative z-10 pt-[56px]">
-      <slot />
-    </main>
-
-    <!-- Footer -->
-    <footer class="relative z-10 border-t border-hairline bg-canvas py-16">
-      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
-          <span class="font-display text-[15px] font-semibold text-white">
-            Parampreet Singh
-          </span>
-          <p class="text-[13px] text-ink-muted">
-            © {new Date().getFullYear()} Parampreet Singh. All rights reserved.
-          </p>
-        </div>
-
-        <div class="flex gap-6 text-[13px] font-medium text-ink-muted">
-          <a href="https://github.com/ParampreetSingh23" target="_blank" rel="noreferrer" class="hover:text-white transition-colors">GitHub</a>
-          <a href="https://www.linkedin.com/in/parampreet-singh-4a3396271/" target="_blank" rel="noreferrer" class="hover:text-white transition-colors">LinkedIn</a>
-          <a href="mailto:parampreetsinghlall@gmail.com" class="hover:text-white transition-colors">Email</a>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Spotlight Interaction Script -->
-    <script>
-      // Card Spotlight mouse position hook
-      const updateSpotlight = (e: MouseEvent) => {
-        const cards = document.querySelectorAll('.card-spotlight') as NodeListOf<HTMLElement>;
-        cards.forEach((card) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-        });
-      };
-      
-      document.addEventListener('mousemove', updateSpotlight);
-
-      // Mobile menu toggle
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuIcon = document.getElementById('menu-icon');
-
-      if (menuToggle && mobileMenu && menuIcon) {
-        menuToggle.addEventListener('click', () => {
-          const isHidden = mobileMenu.classList.contains('hidden');
-          if (isHidden) {
-            mobileMenu.classList.remove('hidden');
-            menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-          } else {
-            mobileMenu.classList.add('hidden');
-            menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-          }
-        });
-
-        // Close menu on nav link click
-        const links = mobileMenu.querySelectorAll('a');
-        links.forEach(link => {
-          link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-            menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-          });
-        });
-      }
-    </script>
+  <body>
+    <slot />
   </body>
 </html>

@@ -1,0 +1,61 @@
+---
+import Layout from './Layout.astro';
+import '../styles/base.css';
+import '../styles/doc.css';
+import { person, projects, updated } from '../data/portfolio';
+import { logos } from '../data/logos';
+interface Props { frontmatter: { slug: string; title: string; description: string; }; }
+const { frontmatter } = Astro.props;
+const project = projects.find(p => p.slug === frontmatter.slug)!;
+const i = projects.indexOf(project);
+const prev = projects[(i - 1 + projects.length) % projects.length], next = projects[(i + 1) % projects.length];
+const url = `${person.site}/projects/${project.slug}/`;
+const schema = [
+  {
+    '@type': 'TechArticle', '@id': `${url}#article`, url, headline: `${project.name} — ${project.type.toLowerCase()} by ${person.name}`,
+    description: frontmatter.description, inLanguage: 'en', dateModified: updated,
+    author: { '@id': `${person.site}/#person` }, publisher: { '@id': `${person.site}/#person` }, isPartOf: { '@id': `${person.site}/#website` },
+    about: {
+      '@type': 'SoftwareApplication', name: project.name, applicationCategory: 'WebApplication', description: project.description,
+      ...(project.live ? { url: project.live } : {}), ...(project.repo ? { codeRepository: project.repo } : {}),
+      author: { '@id': `${person.site}/#person` },
+    },
+    keywords: project.stack.join(', '),
+  },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Portfolio', item: `${person.site}/` },
+    { '@type': 'ListItem', position: 2, name: 'Projects', item: `${person.site}/#readme` },
+    { '@type': 'ListItem', position: 3, name: project.name, item: url },
+  ] },
+];
+const plated = ['aws', 'nextjs-icon', 'prisma', 'express', 'github-icon'];
+---
+<Layout title={`${project.name} — ${frontmatter.title} | ${person.name}`} description={frontmatter.description} type="article" schema={schema}>
+  <header class="doc-bar">
+    <a href="/">← <span class="u">parampreet@portfolio</span>:<span class="p">~/Desktop/projects</span>$ cat {project.slug}.md</a>
+  </header>
+  <main class="doc">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Portfolio</a> / <a href="/#readme">Projects</a> / <span aria-current="page">{project.name}</span></nav>
+    <span class="eyebrow">{project.type} · {project.context}</span>
+    <h1>{project.name}</h1>
+    <p class="lead">{frontmatter.description}</p>
+    <p class="byline">By <a href="/" rel="author">{person.name}</a> · Updated <time datetime={updated}>{new Date(updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</time></p>
+    {(project.live || project.repo) && <p class="links">
+      {project.live && <a class="btn primary" href={project.live} rel="noopener">Live demo ↗</a>}
+      {project.repo && <a class="btn" href={project.repo} rel="noopener">Source code ↗</a>}
+    </p>}
+    <ol class="flow" aria-label="How it flows">{project.flow.map(s => <li>{s}</li>)}</ol>
+    <article class="prose"><slot /></article>
+    <section>
+      <h2>Tech stack</h2>
+      <ul class="chips">{project.stack.map(t => <li>{logos[t] && <img src={`/logos/${logos[t]}.svg`} alt="" width="16" height="16" loading="lazy" class={plated.includes(logos[t]) ? 'plate' : undefined} />}{t}</li>)}</ul>
+    </section>
+    <nav class="pager" aria-label="More projects">
+      <a href={`/projects/${prev.slug}/`}>← {prev.name}</a>
+      <a href={`/projects/${next.slug}/`}>{next.name} →</a>
+    </nav>
+  </main>
+  <footer class="doc-foot">
+    <a href="/">Open the desktop portfolio</a> · <a href={`mailto:${person.email}`}>{person.email}</a> · <a href={person.github} rel="me">GitHub</a> · <a href={person.linkedin} rel="me">LinkedIn</a>
+  </footer>
+</Layout>
