@@ -1,0 +1,38 @@
+/* Plain, fast, readable project pages — the crawlable counterpart of the desktop. */
+body { background: #0f0f0e; color: var(--os-text); line-height: 1.65; }
+.doc-bar { position: sticky; top: 0; z-index: 2; padding: 10px 20px; background: var(--os-bar); border-bottom: 1px solid var(--os-border); font: 13px var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.doc-bar .u { color: var(--os-ok); }
+.doc-bar .p { color: var(--os-path); }
+.doc-bar a:hover { opacity: .8; }
+.doc { width: min(760px, 100% - 32px); margin: 0 auto; padding: 40px 0 24px; }
+.crumbs { font: 12px var(--font-mono); color: var(--os-muted); margin-bottom: 28px; }
+.crumbs a:hover, .byline a:hover, .doc-foot a:hover { color: var(--os-accent); }
+.eyebrow { font: 11px/1.4 var(--font-mono); letter-spacing: .08em; color: var(--os-accent); }
+h1 { margin: 10px 0 12px; font-size: clamp(36px, 7vw, 56px); line-height: 1.05; font-weight: 600; letter-spacing: -.02em; }
+.lead { font-size: 19px; color: #d6d4cc; margin: 0 0 12px; }
+.byline { font: 12px var(--font-mono); color: var(--os-muted); margin: 0 0 20px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 28px; }
+.btn { padding: 8px 14px; border: 1px solid var(--os-border); border-radius: 8px; background: rgba(255,255,255,.06); font-size: 14px; font-weight: 500; }
+.btn:hover { background: rgba(255,255,255,.13); }
+.btn.primary { background: var(--os-accent); color: #111; border-color: transparent; }
+.flow { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 26px; margin: 0 0 36px; padding: 16px; border: 1px solid var(--os-border); border-radius: 12px; background: #171715; counter-reset: step; }
+.flow li { position: relative; font-size: 14px; counter-increment: step; }
+.flow li::before { content: counter(step, decimal-leading-zero) ' '; font: 11px var(--font-mono); color: var(--os-accent); }
+.flow li:not(:last-child)::after { content: '→'; position: absolute; right: -19px; color: var(--os-muted); }
+.prose h2, section h2 { margin: 40px 0 12px; font-size: 24px; font-weight: 600; letter-spacing: -.01em; }
+.prose p, .prose li { color: #d6d4cc; font-size: 16.5px; }
+.prose ul, .prose ol { padding-left: 20px; }
+.prose li { margin: 6px 0; }
+.prose li::marker { color: var(--os-accent); }
+.prose strong { color: var(--os-text); }
+.prose a { color: var(--os-accent); text-decoration: underline; text-underline-offset: 3px; }
+.prose code { font: .9em var(--font-mono); background: #22221f; padding: 1px 5px; border-radius: 4px; }
+.prose pre { background: var(--os-term); border: 1px solid var(--os-border); border-radius: 10px; padding: 16px; overflow-x: auto; font: 13px/1.5 var(--font-mono); }
+.prose pre code { background: none; padding: 0; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { display: inline-flex; align-items: center; gap: 7px; padding: 5px 11px; border: 1px solid var(--os-border); border-radius: 999px; background: #1b1b19; font-size: 13px; }
+.chips img { width: 16px; height: 16px; object-fit: contain; }
+.chips img.plate { background: #e8e3d8; border-radius: 3px; padding: 1px; }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--os-border); font-weight: 500; }
+.pager a:hover { color: var(--os-accent); }
+.doc-foot { width: min(760px, 100% - 32px); margin: 0 auto; padding: 24px 0 48px; font: 12px var(--font-mono); color: var(--os-muted); }

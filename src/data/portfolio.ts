@@ -6,9 +6,12 @@ export const person = {
   github: 'https://github.com/ParampreetSingh23',
   githubUser: 'ParampreetSingh23',
   linkedin: 'https://www.linkedin.com/in/parampreetsingh23',
-  site: 'https://parampreetsingh.dev',
+  site: 'https://portfolio.parampreetsingh.dev',
   summary: 'Final-year Computer Science undergraduate (CGPA 9.44) with a strong foundation in data structures, algorithms (350+ problems), and system design. Full-stack software developer skilled in Java, Python, and TypeScript, building scalable web applications, REST and real-time APIs, and cloud-deployed systems on AWS.',
 };
+
+/** Bump when content changes; drives sitemap lastmod and page dates. */
+export const updated = '2026-10-19';
 
 export const education = { degree: 'B.Tech, Computer Science', school: 'Chitkara University, Rajpura, Punjab', cgpa: '9.44', year: 'Final year' };
 
@@ -43,18 +46,6 @@ export const projects: Project[] = [
     'Serverless PostgreSQL with Drizzle ORM, React Query caching and Zod validation; deployed on Render.',
   ] },
 ];
-
-// Add supplied assets here; paths are relative to public/. Never substitute stock photographs.
-export interface Photo { src: string; alt: string; caption: string; width: number; height: number; }
-export const assets: { profile: Photo | null; personal: Photo[]; screenshots: Partial<Record<string, Photo>> } = {
-  profile: { src: '/images/profile/parampreet-cutout.png', alt: 'Parampreet Singh wearing a burgundy turban and a light blue shirt.', caption: 'The human behind the system.', width: 1024, height: 1536 },
-  personal: [
-    { src: '/images/personal/book-market.jpg', alt: 'Book stalls filled with stacks of books under colorful canopies.', caption: 'A different kind of rabbit hole. / Book market', width: 1330, height: 2364 },
-    { src: '/images/personal/hillside-dusk.jpg', alt: 'Hillside lights beneath an orange sunset and blue evening sky.', caption: 'Away from the screen. / Hillside at dusk', width: 664, height: 1182 },
-    { src: '/images/personal/bakery-counter.jpg', alt: 'Cakes under glass domes and pastries in a warmly lit bakery display.', caption: 'Something worth slowing down for. / Bakery counter', width: 664, height: 1182 },
-  ],
-  screenshots: {},
-};
 
 export const skillGroups = [
   { name: 'Languages', items: 'Java / Python / C++ / JavaScript / TypeScript / SQL / Bash' },

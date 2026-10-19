@@ -1,0 +1,31 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: tally
+title: Accounting Automation Platform
+description: A reconciliation and TallyPrime posting platform built end to end by Parampreet Singh at Rabbitt AI for 45+ accounting users, with Next.js, Node.js, BullMQ, Redis and PostgreSQL on AWS.
+---
+
+## What is the Tally Reconciliation platform?
+
+The Tally Reconciliation and Accounting Automation Platform is a client project Parampreet Singh built as a Software Developer Intern at Rabbitt AI, starting April 2026. It pulls invoices, payment-gateway and bank reports, and email or Excel imports into one place. It then matches them one-to-one and turns approved records into TallyPrime vouchers. Parampreet owned the project end to end: gathering requirements, leading client calls and product demos, translating accounting rules into a technical design and delivering the platform to more than 45 accounting users. The system runs as a Next.js frontend, a Node.js/TypeScript REST backend and a separate BullMQ worker service. Redis and PostgreSQL on AWS RDS back all three, packaged with Docker Compose behind an Nginx reverse proxy on AWS EC2.
+
+## How does data get in?
+
+- Ingestion pipelines for **seven invoice REST APIs**, payment-gateway and bank reports, and email/Excel imports.
+- **Per-source configurable field mappings**, so a new source is configuration rather than code.
+- Schema normalisation and **source-level deduplication** before anything is matched.
+
+## How does reconciliation work?
+
+A strict **one-to-one matching engine** compares transaction date, category, reference and exact amount. Records that don't match cleanly are classified as mismatches, one-sided records or duplicates. They land in an **exception-review workflow** where an accountant decides what happens next.
+
+## How are vouchers posted to TallyPrime safely?
+
+- The platform generates TallyPrime XML vouchers with ledger, Cost Centre and GST/HSN mappings.
+- Every post is gated by a **server-side preflight**. It verifies the Tally endpoint and locks the target company by GUID, so vouchers can never land in the wrong company.
+- Batch posting handles **up to 13,000 vouchers**. It uses per-company concurrency control, persistent idempotency keys, verify-before-retry on timeouts and a resumable Pending state.
+- A scheduled daily pipeline runs the whole flow with full audit logs.
+
+## Why it matters
+
+Accounting data can't be "mostly right". The design leans on idempotency, verification and audit trails, so a network timeout or a retry never creates a duplicate voucher.

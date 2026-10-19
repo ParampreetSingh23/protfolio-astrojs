@@ -7,7 +7,7 @@ const HOME = '~';
 const DESKTOP = '~/Desktop';
 const PROJECTS = '~/Desktop/projects';
 
-const projectDoc = (p: typeof projects[number]) => [
+export const projectDoc = (p: typeof projects[number]) => [
   `# ${p.name}`, `${p.type} · ${p.context}`, '', p.description, '', ...p.points.map(x => `- ${x}`), '', `stack: ${p.stack.join(', ')}`, ...(p.live ? [`live:  ${p.live}`] : []), ...(p.repo ? [`repo:  ${p.repo}`] : []),
 ].join('\n');
 

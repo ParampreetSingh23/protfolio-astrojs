@@ -306,6 +306,7 @@ function openProject(slug: string) {
       h('div', { class: 'proj-actions' },
         p.live ? btn('Live demo', ui.Play, () => openBrowser(p.live!), 'primary') : null,
         p.repo ? h('a', { class: 'proj-btn', href: p.repo, target: '_blank', rel: 'noopener' }, svg(ui.FolderGit2), 'Source ↗') : null,
+        btn('Case study', ui.FileText, () => openBrowser(`/projects/${p.slug}/`)),
         btn('Open in terminal', ui.SquareTerminal, () => openTerminal().exec(`cat ~/Desktop/projects/${p.slug}.md`)))),
     h('section', {}, h('h3', {}, 'How it flows'),
       h('ol', { class: 'flow' }, ...p.flow.map((step, k) => h('li', { style: `--i:${k}` }, h('span', { class: 'flow-n' }, String(k + 1).padStart(2, '0')), step)))),

@@ -1,56 +1,46 @@
-# Parampreet Singh — Engineering Notebook
+# Parampreet Singh — PortfolioOS
 
-A personal portfolio built as an interactive engineering notebook: cloud architecture, production work, learning paths, a small terminal, and the human behind the system.
+Portfolio that boots like a Linux machine. Visitors land on a desktop with files and `.sh` scripts. Double-click (or tap) them, or type commands into the terminal. `./github.sh` opens a live GitHub profile in a built-in mini browser.
+
+Live: https://portfolio.parampreetsingh.dev
 
 ## Run locally
 
-Requires Node.js 22.12 or newer.
+Requires Node.js 22.12+.
 
 ```sh
 npm install
-npm run dev
+npm run dev        # http://localhost:4321
+npm test           # terminal command engine
+npm run check      # astro check
+npm run build      # static output in dist/client
+npm run deploy     # build + wrangler deploy (Cloudflare Workers)
 ```
 
-Visit `http://localhost:4321`. Production output is static HTML, built with Astro and Tailwind CSS. Fonts are hosted locally and photographs have responsive build-time image variants, with original files preserved. GSAP/ScrollTrigger and Lenis load as progressive enhancements on the homepage; no React or Three.js is needed. Lucide icons render at build time. Project field notes are MDX routes.
+## How it fits together
 
-```sh
-npm run check
-npm test
-npm run build
-npm run preview
-```
+| Path | What it is |
+| --- | --- |
+| `src/data/portfolio.ts` | **Single source of truth**: identity, experience, projects (`flow`, `points`, `stack`, `live`, `repo`), skills, `updated` date. |
+| `src/scripts/terminal.ts` | Pure command engine: virtual filesystem (`~/Desktop`, `~/Desktop/projects`), `.sh` scripts, `ls/cd/cat/open/neofetch…`. Returns text plus an action (open browser/files/editor/project). Tested in `tests/terminal.test.mjs`. |
+| `src/scripts/os.ts` | Desktop UI: boot log, window manager (drag, focus, min/max, dock), terminal window, mini browser (GitHub via public API, LinkedIn card, iframes), file manager, text editor, project app, right-click menu, wallpaper themes, synthesized sounds. |
+| `src/scripts/icons.ts` | Lucide icons used by the desktop. |
+| `src/pages/index.astro` | Desktop markup and a plain-HTML `#readme` summary for crawlers and screen readers (shown when JS is off). |
+| `src/pages/projects/*.mdx` + `src/layouts/ProjectLayout.astro` | Crawlable case-study pages, one per project slug. |
+| `src/pages/{robots.txt,sitemap.xml,llms.txt,llms-full.txt}.ts` | Generated at build time from `portfolio.ts`. |
+| `src/layouts/Layout.astro` | `<head>`: canonical, Open Graph/Twitter, JSON-LD graph (Person, WebSite, plus per-page nodes). |
+| `src/styles/` | `base.css` (tokens, fonts, reset), `os.css` (desktop), `doc.css` (project pages). |
+| `public/` | Fonts, logos, `resume.pdf`, `og-image.png` (rendered from `og-image.svg`). |
 
-The existing Cloudflare adapter and Wrangler deployment setup are retained. The generated HTML and assets are in `dist/client/`; the adapter writes generated deployment configuration under `.wrangler/deploy/`. No deployment was performed. `npm run deploy` builds and deploys to the configured Cloudflare account.
+## Editing content
 
-## Edit content
+- **Change a fact or add a project:** edit `src/data/portfolio.ts` and bump `updated`. The desktop, terminal, sitemap, `llms*.txt` and JSON-LD all follow. A new project also needs `src/pages/projects/<slug>.mdx`.
+- **Add a desktop script:** add an entry to `scripts` in `src/scripts/terminal.ts`. It appears on the desktop automatically. Add a test line.
+- **Resume:** replace `public/resume.pdf`.
+- **Social preview:** edit `public/og-image.svg`, then re-render it to a 1200×630 PNG with any headless Chromium.
 
-- `DESIGN.md`: visual system, interaction principles, factual rules, and acceptance criteria based on the supplied brief.
-- `src/data/portfolio.ts`: confirmed identity/contact links, project stacks, and optional image assets.
-- `src/data/logos.ts` and `public/logos/`: local brand SVG mappings and source notes. AWS ECR/EKS use official AWS architecture icons; generic concepts retain text labels.
-- `src/components/`: grouped sections, diagrams, navigation icons, and the system map.
-- `src/pages/projects/*.mdx`: project case studies.
-- `src/scripts/`: accessible controls, terminal parser, visual demonstrations, and deferred motion.
-- `src/styles/global.css`: tokens, responsive composition, and reduced-motion behavior.
-- `GEO-ANALYSIS.md`: local discoverability assessment and remaining evidence gaps.
+## Notes
 
-The supplied brief is the factual source. The previous `public/resume.pdf` is a text placeholder, not an actual PDF, and is not linked. Replace it with a genuine PDF before adding a résumé download.
-
-## Images
-
-The approved transparent portrait is `public/images/profile/parampreet-cutout.png`. Set `assets.profile` in `src/data/portfolio.ts` to replace it. The editing prompt and provenance are in `public/images/README.md`.
-
-Add personal photographs or real project screenshots under the corresponding `public/images/` folder. Every photo entry includes `src`, `alt`, `caption`, `width`, and `height`. The same data file controls the gallery and screenshots. The three supplied personal photos fill the gallery. Future missing photos, timeline artifacts, and failure stories are visibly labeled placeholders. Do not substitute stock photography, fake product screenshots, or invented incidents.
-
-## Behavior
-
-The terminal supports `help`, `about`, `projects`, `experience`, `skills`, `lab`, `contact`, and `clear`, plus arrow-key command history. It does not execute shell commands. Job replay and repository scanning are labeled visual demonstrations; no infrastructure is created, no repository is accessed, and metrics are static examples.
-
-Content, links, diagrams, and expandable notes remain available without JavaScript. Reduced motion disables the intro, smooth scrolling, custom cursor, parallax, and scroll animation; visual demos complete immediately. Mobile navigation uses a native modal dialog with keyboard focus and Escape handling.
-
-## Search
-
-Route-aware canonical/social metadata, Person structured data, a sitemap, permissive robots.txt, and llms.txt are included. The existing domain and social links are preserved. Update all domain references together if the site moves. The four case studies contain self-contained factual summaries and clear limits on unsupported claims. No third-party brand mentions or AI citation outcomes are assumed.
-
-## Dependency audit
-
-The framework, MDX integration, Cloudflare adapter and Wrangler were updated together to compatible current versions. The previous Vite 7 override was removed because Astro 7 requires Vite 8. As of 3 October 2026, npm audit reports four high-severity entries caused by one upstream `http-cache-semantics` advisory (GHSA-ch52-4w7c-c8xp, versions through 4.2.0). The audit suggests incompatible framework downgrades; these were not applied. The portfolio is prerendered and does not implement authenticated server response caching. Recheck the upstream fix before deployment.
+- Ordinary sites can't be framed: GitHub and LinkedIn send `X-Frame-Options`. So the mini browser renders GitHub from `api.github.com` (60 requests/hour per visitor IP) and shows a card for LinkedIn. Same-origin pages and sites that allow framing load in an iframe.
+- Theme and sound preferences live in `localStorage`; the site works without them.
+- Domain move from the apex to `portfolio.` is documented in `DOMAIN-MIGRATION.md`. SEO/GEO status is in `GEO-ANALYSIS.md`.

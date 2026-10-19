@@ -1,12 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import '../styles/base.css';
 import '../styles/os.css';
 import { listDir } from '../scripts/terminal';
 import { iconFor, ui } from '../scripts/icons';
-import { person, projects, experience, education } from '../data/portfolio';
+import { person, projects, experience, education, skillGroups } from '../data/portfolio';
+const schema = [
+  { '@type': 'ProfilePage', '@id': `${person.site}/#profile`, url: `${person.site}/`, name: `${person.name} — Portfolio`, isPartOf: { '@id': `${person.site}/#website` }, mainEntity: { '@id': `${person.site}/#person` } },
+  { '@type': 'ItemList', name: `Projects by ${person.name}`, itemListElement: projects.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${person.site}/projects/${p.slug}/`, name: p.name })) },
+];
 const desktop = listDir('~/Desktop');
 ---
-<Layout bare>
+<Layout schema={schema}>
   <div id="boot" class="boot" aria-hidden="true">
     <pre id="boot-log"></pre>
     <p class="boot-skip">press any key to skip</p>
@@ -64,15 +69,19 @@ const desktop = listDir('~/Desktop');
     <div class="br-page"></div>
   </template>
 
-  <noscript>
-    <article class="noscript">
-      <h2>{person.name} — {person.role}</h2>
-      <p>{person.summary}</p>
-      <p>{experience.role} @ {experience.company} ({experience.period}) · {education.school} · CGPA {education.cgpa}</p>
-      <ul>{projects.map(p => <li><strong>{p.name}</strong> — {p.description}</li>)}</ul>
-      <p><a href={person.github}>GitHub</a> · <a href={person.linkedin}>LinkedIn</a> · <a href={`mailto:${person.email}`}>{person.email}</a> · <a href="/resume.pdf">Resume</a></p>
-    </article>
-  </noscript>
+  <!-- Plain-HTML copy of everything the desktop shows: for screen readers, crawlers and AI answer engines that don't run JS. Visible when JS is off. -->
+  <article id="readme" class="readme sr-only" aria-label="Portfolio summary">
+    <h2>About {person.name}</h2>
+    <p>{person.summary}</p>
+    <p>Currently {experience.role} at {experience.company} ({experience.period}). {education.degree}, {education.school} — CGPA {education.cgpa}, {education.year.toLowerCase()}. Based in {person.location}.</p>
+    <h2>Projects</h2>
+    <ul>{projects.map(p => <li><a href={`/projects/${p.slug}/`}><strong>{p.name}</strong></a> — {p.description} <em>Stack: {p.stack.join(', ')}.</em></li>)}</ul>
+    <h2>Skills</h2>
+    <ul>{skillGroups.map(g => <li><strong>{g.name}:</strong> {g.items}</li>)}</ul>
+    <h2>Contact</h2>
+    <p><a href={`mailto:${person.email}`}>{person.email}</a> · <a href={person.github} rel="me">GitHub</a> · <a href={person.linkedin} rel="me">LinkedIn</a> · <a href="/resume.pdf">Resume (PDF)</a></p>
+  </article>
+  <noscript><style>.readme { position: fixed; inset: 32px 0 0; width: auto; height: auto; clip-path: none; white-space: normal; overflow: auto; padding: 32px; background: #0b0b0a; z-index: 900; } .readme a { color: #ff6b35; }</style></noscript>
 </Layout>
 
 <script>

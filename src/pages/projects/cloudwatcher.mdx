@@ -1,39 +1,24 @@
 ---
 layout: ../../layouts/ProjectLayout.astro
 slug: cloudwatcher
-title: CloudWatcher
-description: Cloud observability tooling at Rabbitt AI, connecting reusable Terraform infrastructure to metric collection and automated threshold alerts.
+title: Cloud Observability Tool
+description: CloudWatcher is a cloud observability tool by Parampreet Singh that pulls AWS CloudWatch metrics, evaluates threshold rules and sends Amazon SNS alerts, provisioned with reusable Terraform modules.
 ---
 
 ## What is CloudWatcher?
 
-CloudWatcher is a cloud observability tool developed as part of Parampreet Singh's Cloud DevOps / SRE internship at Rabbitt AI, which began in April 2026. The work connects infrastructure provisioning, metric collection, and alert delivery using Terraform, AWS CloudWatch, Node.js, Python, SNS, and IAM. Reusable Terraform modules define monitoring resources, including CloudWatch alarms, SNS topics, and IAM roles. Metric collection and threshold-based alerts provide a path from infrastructure signals to notifications that someone can act on. The engineering workflow includes collaborative Git branching, code reviews, and issue-based development. This page describes the supplied project scope, rather than a measured production outcome. It makes no claims about customer count, infrastructure size, uptime improvements, or cost savings. The diagram below is a conceptual explanation of the monitoring path; it is not connected to a running AWS account and does not display live telemetry.
+CloudWatcher is a cloud observability tool Parampreet Singh worked on at Rabbitt AI. It makes AWS infrastructure easier to watch. Services written in Node.js and Python pull metrics from AWS CloudWatch and evaluate them against threshold rules. When a threshold is crossed, they publish automated alerts through Amazon SNS. The supporting infrastructure is defined as code. Reusable, version-controlled Terraform modules provision the CloudWatch alarms, SNS topics and IAM roles the tool depends on. Those modules were shipped through feature branches, pull-request code reviews and issue-based contributions. The result is monitoring that can be reviewed, reproduced and extended like any other code in the repository.
 
-## How does the monitoring path work?
+## How does it work?
 
-```text
-AWS / EC2
-   |
-CloudWatch metric collection
-   |
-Threshold evaluation
-   |
-CloudWatch alarm
-   |
-SNS topic
-   |
-Alert notification
-```
+1. **Collect.** Node.js and Python services pull metrics from AWS CloudWatch using the AWS SDK.
+2. **Evaluate.** Each metric is checked against threshold rules.
+3. **Alert.** Breaches are published to Amazon SNS topics, which fan out the notifications.
 
-Terraform defines the monitoring infrastructure. IAM roles define access, CloudWatch evaluates signals, and SNS delivers notifications. The architecture illustration represents these relationships without inventing account-specific configuration.
+## Why Terraform modules?
 
-## What was the engineering work?
+Alarms, SNS topics and IAM roles are defined in **reusable Terraform modules**. Adding monitoring for a new service means reusing a module, not clicking through the console. Every change goes through version control and review.
 
-- Terraform modules for reusable AWS monitoring infrastructure.
-- CloudWatch alarms, SNS topics, and IAM roles.
-- CloudWatch metric collection and automated threshold alerts.
-- Collaborative branching, code review, and issue-based development.
+## How was it built?
 
-## What is still to document?
-
-A concrete alarm configuration, a redacted Terraform example, the debugging story, and a permitted project screenshot would make this case study more useful. These artifacts have not been supplied. Project-specific results and repository links remain unfilled.
+The tool was built collaboratively through feature branches, pull-request code reviews and issue-based contributions on GitHub.

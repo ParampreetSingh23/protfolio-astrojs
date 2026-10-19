@@ -1,50 +1,37 @@
 ---
 layout: ../../layouts/ProjectLayout.astro
 slug: tisiops
-title: TisiOps
-description: An AI-powered DevOps platform designed around controlled infrastructure jobs, explicit approval, and verification. Personal project by founder and developer Parampreet Singh.
+title: AI-Powered DevOps Platform
+description: TisiOps is an AI-powered DevOps platform founded and built by Parampreet Singh, where AI agents plan infrastructure work through a Plan, Validate, Approve, Execute, Verify pipeline on AWS.
 ---
 
 ## What is TisiOps?
 
-TisiOps is Parampreet Singh's personal AI-powered DevOps platform, with the role of Founder & Developer. It is designed for cloud provisioning, deployment, staging, monitoring, logging, and infrastructure diagnosis. Its architecture separates AI planning from controlled execution: a plan is validated and approved before a job runs, and the outcome is verified afterward. Infrastructure work passes through Redis, BullMQ, and a worker instead of giving an LLM uncontrolled direct shell access. The supplied stack includes Next.js, TypeScript, Node.js, PostgreSQL, Prisma, Redis, BullMQ, Docker, Terraform, AWS EC2, the GitHub API, Clerk, and OpenTelemetry. Repository analysis informs staging plans, while telemetry helps explain running infrastructure. The homepage demonstrates these flows with illustrative job logs and static example metrics. It does not execute deployments, access a repository, or report live server health. Production adoption, measured performance, and reliability outcomes have not been supplied.
+TisiOps is an AI-powered DevOps platform that Parampreet Singh founded and builds as a personal project. Specialised AI agents plan cloud provisioning, deployment, staging, monitoring and infrastructure diagnosis. Their plans never run directly. Every operation passes through a **Plan, Validate, Approve, Execute, Verify** pipeline, so the agents propose changes and controlled workers carry them out. An LLM never gets raw shell access. The platform analyses GitHub repositories and live servers to detect runtime, services and dependencies. It generates isolated staging plans, provisions AWS EC2 with Terraform and deploys with Docker. It is built with Next.js, TypeScript, Node.js, PostgreSQL, Prisma, Redis, BullMQ, Terraform, Clerk and OpenTelemetry.
 
-## Where are the control boundaries?
+## Why not let the AI run commands directly?
+
+Proposing an infrastructure change and executing it are different responsibilities. Each step is explicit in TisiOps:
 
 ```text
-USER → AI AGENT → PLAN
-                   |
-                VALIDATE
-                   |
-                APPROVE
-                   |
-             CONTROLLED JOB
-                   |
-             REDIS / BULLMQ
-                   |
-                 WORKER
-                   |
-              INFRASTRUCTURE
-                   |
-                 VERIFY
+AI agent → PLAN → VALIDATE → APPROVE → EXECUTE (BullMQ worker) → VERIFY
 ```
 
-The distinction matters: proposing an infrastructure operation and executing it are separate responsibilities. The portfolio's replay control is a visual explanation of that boundary, not an operational console.
+A human-approved plan is executed by a controlled worker, then checked against what was intended.
 
-## How is a staging plan formed?
+## How does production-to-staging work?
 
-1. Analyse a GitHub repository.
-2. Detect its runtime, services, and dependencies.
-3. Form a staging infrastructure plan.
-4. Prepare AWS EC2 and Docker deployment.
-5. Deploy and verify the resulting environment.
+1. Analyse the GitHub repository and the live server.
+2. Detect the runtime, services and dependencies.
+3. Generate an isolated staging plan.
+4. Provision AWS EC2 with Terraform.
+5. Deploy with Docker and verify.
 
-The demonstration progressively highlights those steps. It performs no real repository scan or cloud operation.
+## How is execution made reliable?
 
-## How does observability fit?
+- Asynchronous jobs on **Redis/BullMQ** with retries, idempotency and job tracking.
+- **SSH readiness checks** before any remote work starts.
+- Job state persisted in **PostgreSQL** through Prisma.
+- **OpenTelemetry + SigNoz** monitoring, and **Clerk** for user-scoped security.
 
-Server and application signals include CPU, RAM, disk, Docker, and application behavior. The supplied observability path uses OpenTelemetry and SigNoz. The homepage's CPU 42%, memory 61%, and disk 37% are explicitly static demo values, not actual platform measurements.
-
-## What is still to document?
-
-A redacted job payload, validation policy, approval interface, worker execution contract, and verification result. Actual screenshots, incidents, deployment outcomes, and a project-specific repository URL are pending.
+The source is on [GitHub](https://github.com/ParampreetSingh23/TisiOps).

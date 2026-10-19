@@ -13,6 +13,12 @@
 			"id": "7a609b5ab2fc4f6a968ae01787104daf"
 		}
 	],
+	// portfolio.* is canonical. The apex stays attached only so Cloudflare keeps its DNS record + certificate;
+	// a Redirect Rule (see DOMAIN-MIGRATION.md) 301s it to portfolio.* before the Worker runs.
+	"routes": [
+		{ "pattern": "portfolio.parampreetsingh.dev", "custom_domain": true },
+		{ "pattern": "parampreetsingh.dev", "custom_domain": true }
+	],
 	"observability": {
 		"enabled": true
 	}

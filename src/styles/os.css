@@ -1,18 +1,4 @@
 /* PortfolioOS — Linux-desktop portfolio. Dark only: it is a terminal-first desktop by design. */
-:root {
-  --os-bar: #0e0e0d;
-  --os-win: #1d1d1b;
-  --os-win-bar: #2a2a27;
-  --os-border: rgba(255,255,255,.09);
-  --os-text: #ecebe6;
-  --os-muted: #9a978f;
-  --os-accent: #ff6b35;
-  --os-ok: #8ae234;
-  --os-path: #729fcf;
-  --os-term: #0f0f0e;
-  --topbar-h: 32px;
-  --dock-h: 64px;
-}
 html, body { height: 100%; overflow: hidden; }
 body { background: #0b0b0a; color: var(--os-text); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -149,8 +135,6 @@ body { background: #0b0b0a; color: var(--os-text); }
 .li-note { font-size: 13px; color: #59636e; margin-top: 16px; }
 .li .gh-follow { background: #0a66c2; border-color: #0a66c2; color: #fff; border-radius: 20px; }
 
-.noscript { position: fixed; inset: var(--topbar-h) 0 0; overflow: auto; padding: 32px; background: #0b0b0a; z-index: 900; }
-.noscript a { color: var(--os-accent); }
 
 /* ---------- small screens: windows go fullscreen, icons wrap ---------- */
 @media (max-width: 719px) {

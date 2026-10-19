@@ -1,41 +1,30 @@
 ---
 layout: ../../layouts/ProjectLayout.astro
 slug: drip
-title: DRIP
-description: An AI-powered developer productivity platform with contextual assistance, multiple LLM providers, modular APIs, and a Next.js frontend.
+title: Full-Stack Coding Assessment Platform
+description: DRIP is a coding-assessment platform built by Parampreet Singh at Rabbitt AI with isolated browser IDE sessions on AWS ECS, WebSocket proxying, automated grading and OpenAI-powered feedback.
 ---
 
 ## What is DRIP?
 
-DRIP is an AI-powered developer productivity platform described in Parampreet Singh's work at Rabbitt AI. It supports code generation, debugging, refactoring, and contextual developer assistance across multiple LLM providers. Its supplied technology stack includes Next.js, React, TypeScript, Tailwind CSS, Node.js, AI and LLM APIs, PostgreSQL, Prisma, Docker, Git, and AWS. The project scope includes a scalable frontend, authentication, modular API architecture, server-side rendering, state management, GitHub Actions, and AWS deployment. These pieces connect the developer-facing interface to backend assistance and persistent application data. The portfolio architecture is an explanatory diagram of those components, not a product screenshot or an exact request trace. No usage, accuracy, latency, production scale, or business outcome is claimed here. The purpose of these field notes is to explain the system's documented responsibilities while leaving implementation artifacts and measured results open for future evidence.
+DRIP is a full-stack coding-assessment platform Parampreet Singh engineered at Rabbitt AI. Users launch an isolated, browser-based IDE session, run test suites and submit solutions. They then receive automated grading with AI-assisted feedback from the OpenAI API. Each session runs in its own Docker container on AWS ECS. A session-orchestration service provisions the right container for the workload: Python/ML, cloud, or React/Node. It tracks every session and attempt in MongoDB. The browser talks to the container-hosted code-server through a WebSocket proxy layer. The rest of the platform is built with Node.js, Express.js, Mongoose, a Next.js App Router frontend in TypeScript, Zustand and Amazon S3.
 
-## How do the components connect?
+## How are sessions orchestrated?
 
-```text
-USER
-  |
-NEXT.JS / REACT
-  |
-API / BACKEND
-  |
-AI / LLM PROVIDERS
-  |
-POSTGRESQL / PRISMA
+- **Per-user Docker containers on AWS ECS** keep candidates isolated from each other and from the platform.
+- The orchestrator chooses the container image by workload type: Python/ML, cloud, or React/Node.
+- The **session and attempt lifecycle** lives in MongoDB, so a session can be tracked from launch to submission.
 
-Infrastructure: DOCKER / AWS
-Delivery: GIT / GITHUB ACTIONS
-```
+## How does the browser reach the container?
 
-This is a conceptual component map. Persistence supports application state; the diagram does not assert that each provider response follows a single mandatory database write.
+A **WebSocket proxy layer** routes real-time, bidirectional traffic between the browser and container-hosted code-server instances. The IDE feels local while the code runs remotely.
 
-## What does the platform cover?
+## How is the API structured and secured?
 
-- Contextual developer assistance for generating, debugging, and refactoring code.
-- Multiple LLM provider integrations.
-- Authentication and modular backend APIs.
-- Server-side rendering and frontend state management.
-- Containerization, CI/CD, and AWS deployment.
+- Modular RESTful APIs with Express.js and Mongoose.
+- **JWT authentication and role-based access control** across students, administrators, classrooms, assessments, sessions and attempts.
+- File delivery goes through **Amazon S3 presigned URLs**, which takes load off the backend.
 
-## What evidence belongs here next?
+## What does the frontend look like?
 
-A permitted screenshot, a redacted API boundary, a description of provider selection, and a concrete implementation tradeoff. These are pending supplied artifacts. No project-specific repository URL or production results have been provided.
+A Next.js App Router frontend written in TypeScript, with centralised Zustand stores for session and assessment state.

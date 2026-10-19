@@ -1,12 +1,32 @@
 ---
-import '../styles/global.css';
-import { person } from '../data/portfolio';
-import Icon from '../components/Icon.astro';
-interface Props { title?: string; description?: string; bare?: boolean; }
-const { title = 'Parampreet Singh — Software Developer', description = 'Portfolio of Parampreet Singh — full-stack software developer (TypeScript, Node.js, Next.js, AWS). Boot into a Linux-style desktop and run the scripts.', bare = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname, person.site).href;
-const home = Astro.url.pathname === '/';
-const schema = { '@context': 'https://schema.org', '@type': 'Person', name: person.name, url: person.site, jobTitle: 'Software Developer Intern', worksFor: { '@type': 'Organization', name: 'Rabbitt AI' }, affiliation: { '@type': 'CollegeOrUniversity', name: 'Chitkara University' }, sameAs: [person.github, person.linkedin], email: person.email, knowsAbout: ['Full-stack development', 'TypeScript', 'Node.js', 'Next.js', 'AWS', 'Distributed systems'] };
+import { person, experience, skillGroups, updated } from '../data/portfolio';
+interface Props { title?: string; description?: string; type?: 'website' | 'article'; schema?: Record<string, unknown>[]; }
+const {
+  title = 'Parampreet Singh — Software Developer | Full-Stack, Node.js, Next.js, AWS',
+  description = 'Parampreet Singh is a full-stack software developer (TypeScript, Node.js, Next.js, AWS) and Software Developer Intern at Rabbitt AI. Explore projects through a Linux-style desktop portfolio.',
+  type = 'website',
+  schema = [],
+} = Astro.props;
+const site = person.site;
+const canonical = new URL(Astro.url.pathname, site).href;
+const image = `${site}/og-image.png`;
+const personId = `${site}/#person`;
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person', '@id': personId, name: person.name, url: `${site}/`, image: `${site}/images/profile/parampreet-cutout.png`,
+      jobTitle: experience.role, description: person.summary, email: `mailto:${person.email}`,
+      worksFor: { '@type': 'Organization', name: experience.company },
+      affiliation: { '@type': 'CollegeOrUniversity', name: 'Chitkara University', address: { '@type': 'PostalAddress', addressLocality: 'Rajpura', addressRegion: 'Punjab', addressCountry: 'IN' } },
+      address: { '@type': 'PostalAddress', addressLocality: 'Doraha', addressRegion: 'Punjab', addressCountry: 'IN' },
+      knowsAbout: skillGroups.flatMap(g => g.items.split(' / ')).slice(0, 40),
+      sameAs: [person.github, person.linkedin],
+    },
+    { '@type': 'WebSite', '@id': `${site}/#website`, url: `${site}/`, name: `${person.name} — Portfolio`, inLanguage: 'en', publisher: { '@id': personId } },
+    ...schema,
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -14,58 +34,33 @@ const schema = { '@context': 'https://schema.org', '@type': 'Person', name: pers
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0B0B0A" />
+    <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={person.name} />
-    <meta name="robots" content="index, follow" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Parampreet Singh — Engineering Notebook" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={`${person.name} — Portfolio`} />
+    <meta property="og:locale" content="en_IN" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={`${person.site}/og-image.png`} />
-    <meta property="og:image:alt" content="Parampreet Singh — AI, Cloud & Systems. A digital engineering notebook." />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Parampreet Singh — Software Developer. A Linux desktop portfolio." />
+    {type === 'article' && <meta property="article:modified_time" content={updated} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${person.site}/og-image.png`} />
+    <meta name="twitter:image" content={image} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+    <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(graph).replace(/</g, '\\u003c')} />
   </head>
   <body>
-    {bare ? <slot /> : <Fragment>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="grain" aria-hidden="true"></div>
-    <header class="site-header" id="site-header">
-      <div class="nav-inner">
-        <a class="wordmark" href={home ? '#home' : '/'} aria-label="Parampreet Singh, home">PARAMPREET<span class="brand-mark" aria-hidden="true">[ p. ]</span></a>
-        <nav class="desktop-nav" aria-label="Main navigation">
-          <a href={`${home ? '' : '/'}#work`}>WORK <sup>04</sup></a>
-          <a href={`${home ? '' : '/'}#lab`}>LAB</a>
-          <a href={`${home ? '' : '/'}#about`}>ABOUT</a>
-          <a href={`${home ? '' : '/'}#contact`}>CONTACT <Icon /></a>
-        </nav>
-        <span class="online mono"><i></i> ONLINE</span>
-        <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation"><Icon name="Menu" /></button>
-      </div>
-    </header>
-    <noscript><nav class="fallback-nav wrap" aria-label="Navigation without JavaScript"><a href={`${home ? '' : '/'}#work`}>Work</a><a href={`${home ? '' : '/'}#lab`}>Lab</a><a href={`${home ? '' : '/'}#about`}>About</a><a href={`${home ? '' : '/'}#contact`}>Contact</a></nav></noscript>
-    <dialog id="mobile-menu" class="mobile-menu">
-      <div class="menu-top"><span class="mono">SYSTEM / INDEX</span><button id="menu-close" aria-label="Close navigation"><Icon name="X" /></button></div>
-      <nav aria-label="Mobile navigation">
-        <a href={`${home ? '' : '/'}#work`}>01. Work</a><a href={`${home ? '' : '/'}#lab`}>02. Lab</a><a href={`${home ? '' : '/'}#about`}>03. About</a><a href={`${home ? '' : '/'}#contact`}>04. Contact</a>
-      </nav>
-      <span class="mono">PERSON. CURIOSITY. SYSTEMS.</span>
-    </dialog>
-    <main id="main"><slot /></main>
-    <footer class="site-footer wrap"><span>© 2026 Parampreet Singh</span><span class="mono">BUILT WITH CURIOSITY / ASTRO</span><a href={`${home ? '' : '/'}#home`}>Back to start <Icon name="ArrowUpRight" /></a></footer>
-    <div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
-    <script>
-      import '../scripts/interface';
-    </script>
-    </Fragment>}
+    <slot />
   </body>
 </html>
