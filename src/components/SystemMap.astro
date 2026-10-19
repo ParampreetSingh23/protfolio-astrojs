@@ -1,0 +1,36 @@
+---
+interface Props { closing?: boolean; }
+const { closing = false } = Astro.props;
+const brands: Record<string,string> = { CLOUD: 'aws-ec2', DEVOPS: 'kubernetes', LEARNING: 'java', BACKEND: 'nodejs-icon' };
+const nodes = closing ? [
+  { name: 'WORK', sub: 'PRODUCTION', x: 285, y: 34, href: '#work' },
+  { name: 'ABOUT', sub: 'HUMAN / 001', x: 60, y: 130, href: '#about' },
+  { name: 'JOURNEY', sub: '2023 — NOW', x: 380, y: 150, href: '#journey' },
+  { name: 'SYSTEMS', sub: 'TISIOPS', x: 365, y: 310, href: '#systems' },
+  { name: 'LAB', sub: 'EXPERIMENTS', x: 55, y: 300, href: '#lab' },
+  { name: 'CURIOSITY', sub: 'RABBIT HOLES', x: 235, y: 405, href: '#rabbit-holes' },
+] : [
+  { name: 'AI', sub: 'LLM / AGENTS', x: 285, y: 34, href: '#rabbit-holes' },
+  { name: 'LEARNING', sub: 'JAVA / PYTHON', x: 60, y: 130, href: '#journey' },
+  { name: 'CLOUD', sub: 'AWS / TERRAFORM', x: 380, y: 150, href: '#work' },
+  { name: 'DEVOPS', sub: 'K8S / DOCKER', x: 365, y: 310, href: '#systems' },
+  { name: 'BUILDING', sub: 'LINUX / SYSTEMS', x: 55, y: 300, href: '#lab' },
+  { name: 'BACKEND', sub: 'API / DATA', x: 235, y: 405, href: '#work' },
+];
+---
+<div class:list={['system-map', { 'closing-map': closing }]} data-system-map>
+  <div class="map-header mono"><span>{closing ? 'THE SAME SYSTEM. A LITTLE MORE CONTEXT.' : 'PERSONAL SYSTEM / V.01'}</span><span class="map-cross">+</span></div>
+  <svg viewBox="0 0 500 465" role="group" aria-label={closing ? 'Notebook chapters connected to Parampreet. Explore each linked chapter.' : 'Parampreet connected to AI, learning, cloud, DevOps, building and backend. Explore each linked node.'}>
+    <g class="map-guide" fill="none"><circle cx="250" cy="235" r="154"/><circle cx="250" cy="235" r="206" stroke-dasharray="2 9"/><path d="M250 10V455M20 235H480" stroke-dasharray="3 8"/></g>
+    <g fill="none" class="map-wires">
+      {nodes.map(n => <path d={`M250 235 L${n.x + 38} 235 L${n.x + 38} ${n.y + 15}`} />)}
+    </g>
+    <g class="map-center"><rect x="175" y="207" width="150" height="56" rx="2"/><circle cx="190" cy="235" r="3"/><text x="209" y="231" class="map-name">PARAMPREET</text><text x="209" y="247" class="map-caption">HUMAN / 001</text></g>
+    {nodes.map((n,i) => <a href={n.href} aria-label={`Explore ${n.name.toLowerCase()}: ${n.sub}`} class="map-node" style={`--node-delay:${i * 0.4}s`}>
+      <rect x={n.x - 12} y={n.y - 4} width="118" height="54" rx="2"/>
+      {!closing && brands[n.name] ? <image href={`/logos/${brands[n.name]}.svg`} x={n.x-5} y={n.y+5} width="13" height="13" aria-hidden="true"/> : <circle cx={n.x} cy={n.y + 12} r="3"/>}<text x={n.x + 14} y={n.y + 16} class="map-name">{n.name}</text><text x={n.x + 12} y={n.y + 35} class="map-caption">{n.sub}</text>
+    </a>)}
+    <g class="map-coordinate"><text x="12" y="449">x: curiosity</text><text x="367" y="449">y: iteration</text></g>
+  </svg>
+  <div class="map-footer mono"><span><i class="status-dot"></i> ALWAYS IN DEVELOPMENT</span><span>FIG. {closing ? '08' : '01'}</span></div>
+</div>

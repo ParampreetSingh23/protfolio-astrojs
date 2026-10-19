@@ -1,0 +1,13 @@
+---
+import Layout from './Layout.astro';
+import { projects } from '../data/portfolio';
+import Icon from '../components/Icon.astro';
+import TechnologyList from '../components/TechnologyList.astro';
+interface Props { frontmatter: { slug: string; title: string; description: string; }; }
+const { frontmatter } = Astro.props;
+const project = projects.find(p => p.slug === frontmatter.slug)!;
+const next = projects[(projects.indexOf(project)+1)%projects.length];
+---
+<Layout title={`${project.name} — Field Notes | Parampreet Singh`} description={frontmatter.description}>
+<article class="project-page wrap"><a class="text-link" href={`/#${project.slug}`}>BACK TO THE NOTEBOOK <Icon name="ArrowUpRight"/></a><span class="eyebrow">PROJECT / FIELD NOTES</span><h1>{project.name}<span class="orange-text">.</span></h1><p class="project-description">{frontmatter.description}</p><div class="project-meta mono"><span>BY PARAMPREET SINGH</span><span>{project.context}</span><span>UPDATED <time datetime="2026-10-03">03 OCT 2026</time></span></div><div class="project-article"><slot/></div><div class="stack-line"><TechnologyList items={project.stack}/></div><a class="next-project" href={`/projects/${next.slug}/`}>Next field notes: {next.name} <Icon name="ArrowRight"/></a></article>
+</Layout>

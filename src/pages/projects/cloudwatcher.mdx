@@ -1,0 +1,39 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: cloudwatcher
+title: CloudWatcher
+description: Cloud observability tooling at Rabbitt AI, connecting reusable Terraform infrastructure to metric collection and automated threshold alerts.
+---
+
+## What is CloudWatcher?
+
+CloudWatcher is a cloud observability tool developed as part of Parampreet Singh's Cloud DevOps / SRE internship at Rabbitt AI, which began in April 2026. The work connects infrastructure provisioning, metric collection, and alert delivery using Terraform, AWS CloudWatch, Node.js, Python, SNS, and IAM. Reusable Terraform modules define monitoring resources, including CloudWatch alarms, SNS topics, and IAM roles. Metric collection and threshold-based alerts provide a path from infrastructure signals to notifications that someone can act on. The engineering workflow includes collaborative Git branching, code reviews, and issue-based development. This page describes the supplied project scope, rather than a measured production outcome. It makes no claims about customer count, infrastructure size, uptime improvements, or cost savings. The diagram below is a conceptual explanation of the monitoring path; it is not connected to a running AWS account and does not display live telemetry.
+
+## How does the monitoring path work?
+
+```text
+AWS / EC2
+   |
+CloudWatch metric collection
+   |
+Threshold evaluation
+   |
+CloudWatch alarm
+   |
+SNS topic
+   |
+Alert notification
+```
+
+Terraform defines the monitoring infrastructure. IAM roles define access, CloudWatch evaluates signals, and SNS delivers notifications. The architecture illustration represents these relationships without inventing account-specific configuration.
+
+## What was the engineering work?
+
+- Terraform modules for reusable AWS monitoring infrastructure.
+- CloudWatch alarms, SNS topics, and IAM roles.
+- CloudWatch metric collection and automated threshold alerts.
+- Collaborative branching, code review, and issue-based development.
+
+## What is still to document?
+
+A concrete alarm configuration, a redacted Terraform example, the debugging story, and a permitted project screenshot would make this case study more useful. These artifacts have not been supplied. Project-specific results and repository links remain unfilled.

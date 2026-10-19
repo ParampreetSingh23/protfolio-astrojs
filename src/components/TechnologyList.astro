@@ -1,0 +1,6 @@
+---
+import TechLogo from './TechLogo.astro';
+interface Props { items: string[]; }
+const { items } = Astro.props;
+---
+<div class="technology-list">{items.map(name => <span class="technology"><TechLogo name={name}/><span>{name}</span></span>)}</div>

@@ -1,0 +1,41 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: drip
+title: DRIP
+description: An AI-powered developer productivity platform with contextual assistance, multiple LLM providers, modular APIs, and a Next.js frontend.
+---
+
+## What is DRIP?
+
+DRIP is an AI-powered developer productivity platform described in Parampreet Singh's work at Rabbitt AI. It supports code generation, debugging, refactoring, and contextual developer assistance across multiple LLM providers. Its supplied technology stack includes Next.js, React, TypeScript, Tailwind CSS, Node.js, AI and LLM APIs, PostgreSQL, Prisma, Docker, Git, and AWS. The project scope includes a scalable frontend, authentication, modular API architecture, server-side rendering, state management, GitHub Actions, and AWS deployment. These pieces connect the developer-facing interface to backend assistance and persistent application data. The portfolio architecture is an explanatory diagram of those components, not a product screenshot or an exact request trace. No usage, accuracy, latency, production scale, or business outcome is claimed here. The purpose of these field notes is to explain the system's documented responsibilities while leaving implementation artifacts and measured results open for future evidence.
+
+## How do the components connect?
+
+```text
+USER
+  |
+NEXT.JS / REACT
+  |
+API / BACKEND
+  |
+AI / LLM PROVIDERS
+  |
+POSTGRESQL / PRISMA
+
+Infrastructure: DOCKER / AWS
+Delivery: GIT / GITHUB ACTIONS
+```
+
+This is a conceptual component map. Persistence supports application state; the diagram does not assert that each provider response follows a single mandatory database write.
+
+## What does the platform cover?
+
+- Contextual developer assistance for generating, debugging, and refactoring code.
+- Multiple LLM provider integrations.
+- Authentication and modular backend APIs.
+- Server-side rendering and frontend state management.
+- Containerization, CI/CD, and AWS deployment.
+
+## What evidence belongs here next?
+
+A permitted screenshot, a redacted API boundary, a description of provider selection, and a concrete implementation tradeoff. These are pending supplied artifacts. No project-specific repository URL or production results have been provided.

@@ -1,0 +1,50 @@
+---
+layout: ../../layouts/ProjectLayout.astro
+slug: tisiops
+title: TisiOps
+description: An AI-powered DevOps platform designed around controlled infrastructure jobs, explicit approval, and verification. Personal project by founder and developer Parampreet Singh.
+---
+
+## What is TisiOps?
+
+TisiOps is Parampreet Singh's personal AI-powered DevOps platform, with the role of Founder & Developer. It is designed for cloud provisioning, deployment, staging, monitoring, logging, and infrastructure diagnosis. Its architecture separates AI planning from controlled execution: a plan is validated and approved before a job runs, and the outcome is verified afterward. Infrastructure work passes through Redis, BullMQ, and a worker instead of giving an LLM uncontrolled direct shell access. The supplied stack includes Next.js, TypeScript, Node.js, PostgreSQL, Prisma, Redis, BullMQ, Docker, Terraform, AWS EC2, the GitHub API, Clerk, and OpenTelemetry. Repository analysis informs staging plans, while telemetry helps explain running infrastructure. The homepage demonstrates these flows with illustrative job logs and static example metrics. It does not execute deployments, access a repository, or report live server health. Production adoption, measured performance, and reliability outcomes have not been supplied.
+
+## Where are the control boundaries?
+
+```text
+USER → AI AGENT → PLAN
+                   |
+                VALIDATE
+                   |
+                APPROVE
+                   |
+             CONTROLLED JOB
+                   |
+             REDIS / BULLMQ
+                   |
+                 WORKER
+                   |
+              INFRASTRUCTURE
+                   |
+                 VERIFY
+```
+
+The distinction matters: proposing an infrastructure operation and executing it are separate responsibilities. The portfolio's replay control is a visual explanation of that boundary, not an operational console.
+
+## How is a staging plan formed?
+
+1. Analyse a GitHub repository.
+2. Detect its runtime, services, and dependencies.
+3. Form a staging infrastructure plan.
+4. Prepare AWS EC2 and Docker deployment.
+5. Deploy and verify the resulting environment.
+
+The demonstration progressively highlights those steps. It performs no real repository scan or cloud operation.
+
+## How does observability fit?
+
+Server and application signals include CPU, RAM, disk, Docker, and application behavior. The supplied observability path uses OpenTelemetry and SigNoz. The homepage's CPU 42%, memory 61%, and disk 37% are explicitly static demo values, not actual platform measurements.
+
+## What is still to document?
+
+A redacted job payload, validation policy, approval interface, worker execution contract, and verification result. Actual screenshots, incidents, deployment outcomes, and a project-specific repository URL are pending.
